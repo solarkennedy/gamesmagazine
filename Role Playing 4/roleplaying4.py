@@ -52,7 +52,7 @@ actor[7].links = ( movie[11], movie[12] )
 for x in range(8):
 	print "Finding possible actors for node " + str(x)
 	print "   regex: " + actor[x].regex
-	cursor.execute("SELECT * FROM `name` WHERE `name` REGEXP '%(regex)s'" % globals() )
+	cursor.execute("SELECT * FROM `name` WHERE `name` REGEXP '%s'" % actor[x].regex )
         print "Number of possible actors: %d" % cursor.rowcount
 	actor[x].possibilities = cursor.fetchall()
 	
