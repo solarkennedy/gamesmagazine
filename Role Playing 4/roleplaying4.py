@@ -3,10 +3,12 @@ import MySQLdb
 
 #Did you import the imdb into your mysql using imdbpy ?
 dbhost = 'localhost'
-dbuser = 'xkylecomwp'
-dbpass = 'aegooL6a'
-dbname = 'xkylecomwp'
-prefix = 'wp_'
+dbuser = 'imdb'
+dbpass = 'imdb'
+dbname = 'imdb'
+prefix = ''
+db = MySQLdb.connect(host=dbhost, user=dbuser, passwd=dbpass,db=dbname)
+cursor = db.cursor(MySQLdb.cursors.DictCursor)
 
 
 class actorclass:
