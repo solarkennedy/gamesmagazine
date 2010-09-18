@@ -1,4 +1,13 @@
 #!/usr/bin/env python
+import MySQLdb
+
+#Did you import the imdb into your mysql using imdbpy ?
+dbhost = 'localhost'
+dbuser = 'xkylecomwp'
+dbpass = 'aegooL6a'
+dbname = 'xkylecomwp'
+prefix = 'wp_'
+
 
 class actorclass:
    """ Class for the holding the actor's name and what movies he or she has been in """
@@ -19,21 +28,23 @@ actor = []
 for x in range(8):
    actor.append(actorclass())
 
-actor[0].regex = '....., '
+#The example diagram they give is first, last but the imdb data is last,first
+#Question marks stand for 3,4,6, or 9
+actor[0].regex = '^(([a-zA-Z]{3})|([a-zA-Z]{4})|([a-zA-Z]{6})|([a-zA-Z]{9})), [a-zA-Z]{5} '
 actor[0].links = ( movie[12], movie[1] )
-actor[1].regex = '....., '
+actor[1].regex = '^(([a-zA-Z]{3})|([a-zA-Z]{4})|([a-zA-Z]{6})|([a-zA-Z]{9})), [a-zA-Z]{5} '
 actor[1].links = ( movie[0], movie[1] )
-actor[2].regex = '.*,........ '
+actor[2].regex = '^[a-zA-Z]{8}, (([a-zA-Z]{3})|([a-zA-Z]{4})|([a-zA-Z]{6})|([a-zA-Z]{9})) '
 actor[2].links = ( movie[1], movie[2] )
-actor[3].regex = '.......,, '
+actor[3].regex = '^(([a-zA-Z]{3})|([a-zA-Z]{4})|([a-zA-Z]{6})|([a-zA-Z]{9})), [a-zA-Z]{7} '
 actor[3].links = ( movie[3], movie[4] )
-actor[4].regex = '.*,.......'
+actor[4].regex = '^[a-zA-Z]{7}, (([a-zA-Z]{3})|([a-zA-Z]{4})|([a-zA-Z]{6})|([a-zA-Z]{9})) '
 actor[4].links = ( movie[5], movie[6], movie[7] )
-actor[5].regex = '.......,.......'
+actor[5].regex = '^[a-zA-Z]{7}, [a-zA-Z]{7} '
 actor[5].links = ( movie[7], movie[8] )
-actor[6].regex = '.......,'
+actor[6].regex = '^(([a-zA-Z]{3})|([a-zA-Z]{4})|([a-zA-Z]{6})|([a-zA-Z]{9})), [a-zA-Z]{7} '
 actor[6].links = ( movie[9], movie[10] )
-actor[7].regex = '.*,.......'
+actor[7].regex = '^[a-zA-Z]{7}, (([a-zA-Z]{3})|([a-zA-Z]{4})|([a-zA-Z]{6})|([a-zA-Z]{9})) '
 actor[7].links = ( movie[11], movie[12] )
 
 # Populate all possible actor names based on regex
