@@ -6,21 +6,20 @@ dbhost = 'localhost'
 dbuser = 'imdb'
 dbpass = 'imdb'
 dbname = 'imdb'
-prefix = ''
 db = MySQLdb.connect(host=dbhost, user=dbuser, passwd=dbpass,db=dbname)
 cursor = db.cursor(MySQLdb.cursors.DictCursor)
 
 
 class actorclass:
    """ Class for the holding the actor's name and what movies he or she has been in """
-   possibilities = []
+   possibilities = {}
    name = ""
-   movies = []
+   movies = {}
    links = ()
    regex = ""
 class movieclass:
    """ Class for storing movie info """
-   possibilities = []
+   possibilities = {}
 
 movie = []
 for x in range(13):
@@ -53,11 +52,15 @@ actor[7].links = ( movie[11], movie[12] )
 for x in range(8):
 	print "Finding possible actors for node " + str(x)
 	print "   regex: " + actor[x].regex
+	cursor.execute("SELECT * FROM `name` WHERE `name` REGEXP '%(regex)s'" % globals() )
+        print "Number of possible actors: %d" % cursor.rowcount
+	actor[x].possibilities = cursor.fetchall()
+	
 
 # Populate movie lists
-for x in range(8):
-   print "Populating all movies done by actor " str(x)
-   for link in actor[x].links:
+#for x in range(8):
+ #  print "Populating all movies done by actor " str(x)
+  # for link in actor[x].links:
       #if there are movies already
           #trim the possibile actors
       #else
