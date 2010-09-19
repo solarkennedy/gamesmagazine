@@ -53,14 +53,19 @@ for x in range(8):
 	print "Finding possible actors for node " + str(x)
 	print "   regex: " + actor[x].regex
 	cursor.execute("SELECT * FROM `name` WHERE `name` REGEXP '%s'" % actor[x].regex )
-        print "Number of possible actors: %d" % cursor.rowcount
+	print "Number of possible actors: %d" % cursor.rowcount
 	actor[x].possibilities = cursor.fetchall()
 	
 
 # Populate movie lists
-#for x in range(8):
- #  print "Populating all movies done by actor " str(x)
-  # for link in actor[x].links:
+for x in range(8):
+	print "Populating all movies done by actor " str(x)
+	for link in actor[x].links:
+		for possibility in actor[x].possibilities
+		▸       cursor.execute("SELECT * FROM `cast_info` WHERE `person_id` = '%s'" % possibility )
+			print "This actor was in movies: %d" % cursor.rowcount
+			link.possibilities.extend(cursor.fetchall())
+
       #if there are movies already
           #trim the possibile actors
       #else
