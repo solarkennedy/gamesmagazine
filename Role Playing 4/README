@@ -7,7 +7,7 @@ CREATE DATABASE IF NOT EXISTS `imdb` ;
 GRANT ALL PRIVILEGES ON `imdb` . * TO 'imdb'@'localhost';
 
 #Commands to import the imdb into sql
-apt-get install python-imdbpy python-sqlalchemy python-mysqldb
+apt-get install python-imdbpy python-sqlalchemy python-mysqldb python-sqlobject
 mkdir imdb
 cd imdb
 #Download everything, takes a while

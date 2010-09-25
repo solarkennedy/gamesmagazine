@@ -62,10 +62,10 @@ actor[7].links = ( movie[11], movie[12] )
 actor[7].gender= 2
 
 # For speed, we have the actor lists prepopulated in this file
-execfile("actors.py")
+execfile("actresseswithmorethan12.py")
 
 #By doing some sql, we have a list of movies for node 9
-actor[8].possibilities = (1256645, 1257237, 1276030, 1358584, 1365121, 1370180, 1371993, 1382888, 1383244, 1453055, 1457823, 1471961, 1479134, 1531782, 1591576, 1667429, 1674482, 1683812, 1712933, 1740377, 1740418, 1773580, 1863944, 1925365, 1330145 )
+actor[8].possibilities = actresseswithmorethan12
 actor[8].gender = 2
 actor[8].links = ( movie[0],  movie[1], movie[2], movie[3], movie[4], movie[5], movie[6], movie[7], movie[8], movie[9], movie[10], movie[11], movie[12] )
 
