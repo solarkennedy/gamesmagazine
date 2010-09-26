@@ -65,14 +65,12 @@ actor[6].gender= 1
 actor[7].regex = '^[a-zA-Z]{7}, (([a-zA-Z]{3})|([a-zA-Z]{4})|([a-zA-Z]{6})|([a-zA-Z]{9})) '
 actor[7].links = ( movie[11], movie[12] )
 actor[7].gender= 2
+actor[8].links = ( movie[0],  movie[1], movie[2], movie[3], movie[4], movie[5], movie[6], movie[7], movie[8], movie[9], movie[10], movie[11], movie[12] )
+actor[8].gender = 2
 
 # For speed, we have the actor lists prepopulated in this file
 execfile("actorpossibilities.py")
 
-#By doing some sql, we have a list of movies for node 9
-actor[8].possibilities = actresseswithmorethan12
-actor[8].gender = 2
-actor[8].links = ( movie[0],  movie[1], movie[2], movie[3], movie[4], movie[5], movie[6], movie[7], movie[8], movie[9], movie[10], movie[11], movie[12] )
 
 def actorname(id):
         cursor.execute("SELECT `name` FROM `name` WHERE `id` = '%s'" % (id))
@@ -106,6 +104,7 @@ def moviestheyhavebeenin(actor):
 
 
 def recurse(level, centeractress, placedactors):
+	print placedactors
 #def recurse(level, centeractress, placedactors, placedmovies):
 	if level == 8:
 		print "We have reached the end:"
@@ -115,15 +114,20 @@ def recurse(level, centeractress, placedactors):
 		sharedmovies = moviesincommon(centeractress, possibleactor)
 		if len(sharedmovies) >= len(actor[level].links):
 			#We have a move in common
-			recurse(level+1, centeractress, copy.copy(placedactors.append(possibleactor)))
+			try:
+				b = placedactors.append(possibleactor)
+			except:
+				print level, centeractress, placedactors
+				exit()
+			recurse(level+1, centeractress, copy.copy(b))
 	
 
-print "Going through " + str(len( actor[8].possibilities) + " actresses for the center"
+print "Going through " + str(len( actor[8].possibilities)) + " actresses for the center"
 for actress in actor[8].possibilities:
 	#Go through each actress and try to fit it into the puzzle
 	placedactors = []
 	placedmovies = []
 	print "We are recursing with " + actorname(actress) + " (" + str(actress) + ")"
-	recurse(0, centeractress, copy.copy(placedactors) )
+	recurse(0, actress, copy.copy(placedactors) )
 	#recurse(0, centeractress, copy.copy(placedactors), copy.copy(placedmovies) )
 
