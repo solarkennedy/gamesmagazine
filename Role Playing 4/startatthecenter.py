@@ -1,5 +1,10 @@
 #!/usr/bin/env python
+# Role Playing 4 Solver
+# Kyle Anderson 2010
+# Under the AGPL 3
+
 import MySQLdb
+import copy
 
 #Did you import the imdb into your mysql using imdbpy ?
 dbhost = 'localhost'
@@ -63,43 +68,69 @@ actor[7].gender= 2
 
 # For speed, we have the actor lists prepopulated in this file
 execfile("actresseswithmorethan12.py")
+execfile("actors.py")
 
 #By doing some sql, we have a list of movies for node 9
 actor[8].possibilities = actresseswithmorethan12
 actor[8].gender = 2
 actor[8].links = ( movie[0],  movie[1], movie[2], movie[3], movie[4], movie[5], movie[6], movie[7], movie[8], movie[9], movie[10], movie[11], movie[12] )
 
-#for actress in actor[8].possibilities:
-#	cursor.execute("SELECT `name` FROM `name` WHERE `id` = '%s'" % (actress))
-#        SqlResults = cursor.fetchall()
-#	print SqlResults
-#
+def actorname(id):
+        cursor.execute("SELECT `name` FROM `name` WHERE `id` = '%s'" % (id))
+        Results = cursor.fetchall()
+	return Results[0]['name']
+def gender(id):
+	cursor.execute("SELECT `role_id` FROM `cast_info`,`title` WHERE `person_id` = '%s' AND title.id = cast_info.movie_id AND title.production_year >= 2000 AND title.production_year <= 2010 AND title.kind_id = '1' AND (role_id = 1 OR role_id = 2)" % (id) )
+        Results = cursor.fetchall()
+        return Results[0]['role_id']
 
+def isthereanactressinthislist(thelist):
+	for a in thelist:
+		if gender(a) == 2:
+			return True
+	return False
+
+def startfromthemiddle(actress):
+        cursor.execute("SELECT `movie_id` FROM `cast_info`, `title` WHERE `person_id` = '%s' AND title.id = cast_info.movie_id AND title.production_year >= 2000 AND title.production_year <= 2010 AND title.kind_id = '1'" % (actress) )
+        SqlResults = cursor.fetchall()
+        # We have a tuple of dictionaries from our mysql, but we just want a big tuple:
+        movielist = list(set([mov['movie_id'] for mov in SqlResults]))
+
+	
 
 
 
 for possibility in actor[8].possibilities:
 	# Join with the title table to get movies after 2000 and are real movies, and where the role matches their gender
-	cursor.execute("SELECT `movie_id` FROM `cast_info`, `title` WHERE `person_id` = '%s' AND title.id = cast_info.movie_id AND title.production_year >= 2000 AND title.kind_id = 1" % (possibility) )
+	cursor.execute("SELECT `movie_id` FROM `cast_info`, `title` WHERE `person_id` = '%s' AND title.id = cast_info.movie_id AND title.production_year >= 2000 AND title.production_year <= 2010 AND title.kind_id = '1'" % (possibility) )
 	SqlResults = cursor.fetchall()
 	# We have a tuple of dictionaries from our mysql, but we just want a big tuple:
 	movielist = list(set([mov['movie_id'] for mov in SqlResults]))
-        cursor.execute("SELECT `name` FROM `name` WHERE `id` = '%s'" % (possibility))
-	SqlResults = cursor.fetchall()
-	print SqlResults[0]['name'] + ": " + str(len(movielist)) + " movies. (" + str(possibility) + ")"
 
+	allrelatedactors = []
+	
         for movie in movielist:
 	        cursor.execute("SELECT `title` FROM `title` WHERE `id` = '%s'" % (movie) )
 	        SqlResults = cursor.fetchall()
 	        moviename = [mov['title'] for mov in SqlResults]
-		print "  " + moviename[0] + " (" + str(movie) + ")"
+		#print "  " + moviename[0] + " (" + str(movie) + ")"
 
 		cursor.execute("SELECT `person_id`,`name` FROM `cast_info`,`name` WHERE (role_id = 1 OR role_id = 2) AND `movie_id` = '%s' AND cast_info.person_id = name.id" % (movie))
 	        SqlResults = cursor.fetchall()
-	        actors = [persons['name'] for persons in SqlResults]
+	        actors = [persons['person_id'] for persons in SqlResults]
 		actors = list(set(actors))
-		for a in actors:
-			print "     " + a
+		allrelatedactors.extend(actors)
+		#for a in actors:
+		#	print "     " + a
 		
-
+	threecommonactors = list(set([i for i in allrelatedactors if allrelatedactors.count(i) > 2]) - set([ possibility]))
+	twocommonactors = list(set([i for i in allrelatedactors if allrelatedactors.count(i) > 1]) - set([ possibility]))
+	if len(threecommonactors) >= 1:
+		if isthereanactressinthislist(threecommonactors):
+			
+			if len(twocommonactors) >= 8:
+#			print "   And has been in more than 3 movies with the same person"
+#			print set([i for i in allrelatedactors if allrelatedactors.count(i) > 2]) - set([ possibility])
+				print str(actorname(possibility)) + " (" + str(possibility) + ")       And has been in 2 movies with 8 or more other actors"
+#			print set([i for i in allrelatedactors if allrelatedactors.count(i) > 1]) - set([ possibility])
 

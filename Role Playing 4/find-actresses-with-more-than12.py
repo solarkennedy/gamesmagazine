@@ -18,7 +18,7 @@ everyactorlist = [x['id'] for x in SqlResults]
 possibilties = []
 for actor in everyactorlist:
 	#Lets take each actor/actress and find those that fit our criterea
-	cursor.execute("SELECT `movie_id` FROM `cast_info`, `title` WHERE `person_id` = '%s' AND title.id = cast_info.movie_id AND title.production_year >= 2000 AND title.kind_id = 1 AND cast_info.role_id = '2'" % (actor))
+	cursor.execute("SELECT `movie_id` FROM `cast_info`, `title` WHERE `person_id` = '%s' AND title.id = cast_info.movie_id AND title.production_year >= 2000 AND title.production_year <= 2010 AND title.kind_id = 1 AND cast_info.role_id = '2'" % (actor))
 	SqlResults = cursor.fetchall()
 	movielist = [mov['movie_id'] for mov in SqlResults]
 	if len(movielist) >= 13:
