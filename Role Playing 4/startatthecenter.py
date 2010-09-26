@@ -67,8 +67,7 @@ actor[7].links = ( movie[11], movie[12] )
 actor[7].gender= 2
 
 # For speed, we have the actor lists prepopulated in this file
-execfile("actresseswithmorethan12.py")
-execfile("actors.py")
+execfile("actorpossibilities.py")
 
 #By doing some sql, we have a list of movies for node 9
 actor[8].possibilities = actresseswithmorethan12
@@ -89,48 +88,42 @@ def isthereanactressinthislist(thelist):
 		if gender(a) == 2:
 			return True
 	return False
+def moviesincommon(actor1, actor2):
+	cursor.execute("SELECT `movie_id` FROM `cast_info`, `title` WHERE `person_id` = '%s' AND title.id = cast_info.movie_id AND title.production_year >= 2000 AND title.production_year <= 2010 AND title.kind_id = '1' AND (role_id = 1 OR role_id = 2)" % (actor1) )
+        SqlResults = cursor.fetchall()
+        movielist1 = list(set([mov['movie_id'] for mov in SqlResults]))
+        cursor.execute("SELECT `movie_id` FROM `cast_info`, `title` WHERE `person_id` = '%s' AND title.id = cast_info.movie_id AND title.production_year >= 2000 AND title.production_year <= 2010 AND title.kind_id = '1' AND (role_id = 1 OR role_id = 2)" % (actor2) )
+        SqlResults = cursor.fetchall()
+        movielist2 = list(set([mov['movie_id'] for mov in SqlResults]))
+	return tuple( set(movielist1).intersection(set(movielist2)) )
 
-def startfromthemiddle(actress):
-        cursor.execute("SELECT `movie_id` FROM `cast_info`, `title` WHERE `person_id` = '%s' AND title.id = cast_info.movie_id AND title.production_year >= 2000 AND title.production_year <= 2010 AND title.kind_id = '1'" % (actress) )
+def moviestheyhavebeenin(actor):
+        cursor.execute("SELECT `movie_id` FROM `cast_info`, `title` WHERE `person_id` = '%s' AND title.id = cast_info.movie_id AND title.production_year >= 2000 AND title.production_year <= 2010 AND title.kind_id = '1' AND (role_id = 1 OR role_id = 2)" % (actor) )
         SqlResults = cursor.fetchall()
         # We have a tuple of dictionaries from our mysql, but we just want a big tuple:
-        movielist = list(set([mov['movie_id'] for mov in SqlResults]))
+        return list(set([mov['movie_id'] for mov in SqlResults]))
 
+
+
+def recurse(level, centeractress, placedactors):
+#def recurse(level, centeractress, placedactors, placedmovies):
+	if level == 8:
+		print "We have reached the end:"
+		print placedactors
+
+	for possibleactor in actor[level].possibilities:
+		sharedmovies = moviesincommon(centeractress, possibleactor)
+		if len(sharedmovies) >= len(actor[level].links):
+			#We have a move in common
+			recurse(level+1, centeractress, copy.copy(placedactors.append(possibleactor)))
 	
 
-
-
-for possibility in actor[8].possibilities:
-	# Join with the title table to get movies after 2000 and are real movies, and where the role matches their gender
-	cursor.execute("SELECT `movie_id` FROM `cast_info`, `title` WHERE `person_id` = '%s' AND title.id = cast_info.movie_id AND title.production_year >= 2000 AND title.production_year <= 2010 AND title.kind_id = '1'" % (possibility) )
-	SqlResults = cursor.fetchall()
-	# We have a tuple of dictionaries from our mysql, but we just want a big tuple:
-	movielist = list(set([mov['movie_id'] for mov in SqlResults]))
-
-	allrelatedactors = []
-	
-        for movie in movielist:
-	        cursor.execute("SELECT `title` FROM `title` WHERE `id` = '%s'" % (movie) )
-	        SqlResults = cursor.fetchall()
-	        moviename = [mov['title'] for mov in SqlResults]
-		#print "  " + moviename[0] + " (" + str(movie) + ")"
-
-		cursor.execute("SELECT `person_id`,`name` FROM `cast_info`,`name` WHERE (role_id = 1 OR role_id = 2) AND `movie_id` = '%s' AND cast_info.person_id = name.id" % (movie))
-	        SqlResults = cursor.fetchall()
-	        actors = [persons['person_id'] for persons in SqlResults]
-		actors = list(set(actors))
-		allrelatedactors.extend(actors)
-		#for a in actors:
-		#	print "     " + a
-		
-	threecommonactors = list(set([i for i in allrelatedactors if allrelatedactors.count(i) > 2]) - set([ possibility]))
-	twocommonactors = list(set([i for i in allrelatedactors if allrelatedactors.count(i) > 1]) - set([ possibility]))
-	if len(threecommonactors) >= 1:
-		if isthereanactressinthislist(threecommonactors):
-			
-			if len(twocommonactors) >= 8:
-#			print "   And has been in more than 3 movies with the same person"
-#			print set([i for i in allrelatedactors if allrelatedactors.count(i) > 2]) - set([ possibility])
-				print str(actorname(possibility)) + " (" + str(possibility) + ")       And has been in 2 movies with 8 or more other actors"
-#			print set([i for i in allrelatedactors if allrelatedactors.count(i) > 1]) - set([ possibility])
+print "Going through " + str(len( actor[8].possibilities) + " actresses for the center"
+for actress in actor[8].possibilities:
+	#Go through each actress and try to fit it into the puzzle
+	placedactors = []
+	placedmovies = []
+	print "We are recursing with " + actorname(actress) + " (" + str(actress) + ")"
+	recurse(0, centeractress, copy.copy(placedactors) )
+	#recurse(0, centeractress, copy.copy(placedactors), copy.copy(placedmovies) )
 
