@@ -125,7 +125,7 @@ def prettyprint(thelist):
 
 def recurse(level, centeractress, placedactors):
 #def recurse(level, centeractress, placedactors, placedmovies):
-	if level == 6:
+	if level == 8:
 		print "We have reached the end:"
 		prettyprint(placedactors)
 		print placedactors
