@@ -63,12 +63,12 @@ actor[7].links = ( movie[11], movie[12] )
 actor[7].gender= 2
 
 def gender(id):
-        cursor.execute("SELECT `role_id` FROM `cast_info`,`title` WHERE `person_id` = '%s' AND title.id = cast_info.movie_id AND title.production_year >= 2000 AND title.production_year <= 2010 AND title.kind_id = '1' AND (role_id = 1 OR role_id = 2)" % (id) )
+        cursor.execute("SELECT `role_id` FROM `cast_info`,`title` WHERE `person_id` = '%s' AND title.id = cast_info.movie_id AND title.production_year >= 2000 AND title.production_year <= 2010 AND (title.kind_id = '1' OR title.kind_id = '3') AND (role_id = 1 OR role_id = 2)" % (id) )
         Results = cursor.fetchall()
         return Results[0]['role_id']
 
 def howmanymoviestheyhavebeenin(id):
-        cursor.execute("SELECT `movie_id` FROM `cast_info`, `title` WHERE `person_id` = '%s' AND title.id = cast_info.movie_id AND title.production_year >= 2000 AND title.production_year <= 2010 AND title.kind_id = 1 AND (role_id = 1 OR role_id = 2)" % (id))
+        cursor.execute("SELECT `movie_id` FROM `cast_info`, `title` WHERE `person_id` = '%s' AND title.id = cast_info.movie_id AND title.production_year >= 2000 AND title.production_year <= 2010 AND (title.kind_id = 1 OR title.kind_id = '3') AND (role_id = 1 OR role_id = 2)" % (id))
         SqlResults = cursor.fetchall()
         movielist = [mov['movie_id'] for mov in SqlResults]
         return len(movielist)
@@ -106,7 +106,7 @@ print "Number of possible actors: %d" % cursor.rowcount
 
 for act in everyactorlist:
         #Lets take each actor/actress and find those that fit our criterea
-        cursor.execute("SELECT `movie_id` FROM `cast_info`, `title` WHERE `person_id` = '%s' AND title.id = cast_info.movie_id AND title.production_year >= 2000 AND title.production_year <= 2010 AND title.kind_id = 1 AND cast_info.role_id = '2'" % act)
+        cursor.execute("SELECT `movie_id` FROM `cast_info`, `title` WHERE `person_id` = '%s' AND title.id = cast_info.movie_id AND title.production_year >= 2000 AND title.production_year <= 2010 AND (title.kind_id = 1 OR title.kind_id = '3') AND cast_info.role_id = '2'" % act)
         results = cursor.fetchall()
         movielist = [mov['movie_id'] for mov in results]
         if len(movielist) >= 13:
@@ -115,10 +115,10 @@ actor[8].possibilities = possibilities
 print " - Number that are female with more than 12 movies: " + str(len(actor[8].possibilities))
 
 #Populate the file to make it faster
-f = open('actorpossibilties.py','w')
+f = open('actorpossibilities.py','w')
 for x in range(9):
 	f.write("actor[" + str(x)  +  "].possibilities = " + str(actor[x].possibilities) )
 	f.write("\n")
 f.close()
-print "actorpossibilties.py has been populated with this data."
+print "actorpossibilities.py has been populated with this data."
 
