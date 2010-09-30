@@ -68,7 +68,7 @@ def gender(id):
         return Results[0]['role_id']
 
 def howmanymoviestheyhavebeenin(id):
-        cursor.execute("SELECT `movie_id` FROM `cast_info`, `title` WHERE `person_id` = '%s' AND title.id = cast_info.movie_id AND title.production_year >= 2000 AND title.production_year <= 2010 AND (title.kind_id = 1 OR title.kind_id = '3') AND (role_id = 1 OR role_id = 2)" % (id))
+        cursor.execute("SELECT `movie_id` FROM `cast_info`, `title` WHERE `person_id` = '%s' AND title.id = cast_info.movie_id AND title.production_year >= 2000 AND title.production_year <= 2010 AND (title.kind_id = 1 OR title.kind_id = '3') AND (role_id = 1 OR role_id = 2) AND cast_info.note != `(uncredited)`" % (id))
         SqlResults = cursor.fetchall()
         movielist = [mov['movie_id'] for mov in SqlResults]
         return len(movielist)
@@ -106,7 +106,7 @@ print "Number of possible actors: %d" % cursor.rowcount
 
 for act in everyactorlist:
         #Lets take each actor/actress and find those that fit our criterea
-        cursor.execute("SELECT `movie_id` FROM `cast_info`, `title` WHERE `person_id` = '%s' AND title.id = cast_info.movie_id AND title.production_year >= 2000 AND title.production_year <= 2010 AND (title.kind_id = 1 OR title.kind_id = '3') AND cast_info.role_id = '2'" % act)
+        cursor.execute("SELECT `movie_id` FROM `cast_info`, `title` WHERE `person_id` = '%s' AND title.id = cast_info.movie_id AND title.production_year >= 2000 AND title.production_year <= 2010 AND (title.kind_id = 1 OR title.kind_id = '3') AND cast_info.role_id = '2' AND  cast_info.note != `(uncredited)`" % act)
         results = cursor.fetchall()
         movielist = [mov['movie_id'] for mov in results]
         if len(movielist) >= 13:
