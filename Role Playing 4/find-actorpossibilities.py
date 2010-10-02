@@ -37,38 +37,38 @@ for x in range(9):
 #The example diagram they give is first, last but the imdb data is last,first
 #Question marks stand for 3,4,6, or 9
 # Gener in the imdb, 1 is male and 2 is female
-actor[0].regex = '^(([^- ,]{3})|([^- ,]{4})|([^- ,]{6})|([^- ,]{9})), [^- ,]{5} '
+actor[0].regex = '^[^- ,]{4}, [^- ,]{5}( |$)'
 actor[0].links = ( movie[12], movie[1] )
 actor[0].gender= 2
-actor[1].regex = '^(([^- ,]{3})|([^- ,]{4})|([^- ,]{6})|([^- ,]{9})), [^- ,]{5} '
+actor[1].regex = '^[^- ,]{4}, [^- ,]{5}( |$)'
 actor[1].links = ( movie[0], movie[1] )
 actor[1].gender= 1
-actor[2].regex = '^[^- ,]{8}, (([^- ,]{3})|([^- ,]{4})|([^- ,]{6})|([^- ,]{9})) '
+actor[2].regex = '^[^- ,]{8}, [^- ,]{3}( |$)'
 actor[2].links = ( movie[1], movie[2] )
 actor[2].gender= 1
-actor[3].regex = '^(([^- ,]{3})|([^- ,]{4})|([^- ,]{6})|([^- ,]{9})), [^- ,]{7} '
+actor[3].regex = '^[^- ,]{3}, [^- ,]{7}( |$)'
 actor[3].links = ( movie[3], movie[4] )
 actor[3].gender= 2
-actor[4].regex = '^[^- ,]{7}, (([^- ,]{3})|([^- ,]{4})|([^- ,]{6})|([^- ,]{9})) '
+actor[4].regex = '^[^- ,]{7}, [^- ,]{6}( |$)'
 actor[4].links = ( movie[5], movie[6], movie[7] )
 actor[4].gender= 2
-actor[5].regex = '^[^- ,]{7}, [^- ,]{7} '
+actor[5].regex = '^[^- ,]{7}, [^- ,]{7}( |$)'
 actor[5].links = ( movie[7], movie[8] )
 actor[5].gender= 2
-actor[6].regex = '^(([^- ,]{3})|([^- ,]{4})|([^- ,]{6})|([^- ,]{9})), [^- ,]{7} '
+actor[6].regex = '^[^- ,]{4}, [^- ,]{7}( |$)'
 actor[6].links = ( movie[9], movie[10] )
 actor[6].gender= 1
-actor[7].regex = '^[^- ,]{7}, (([^- ,]{3})|([^- ,]{4})|([^- ,]{6})|([^- ,]{9})) '
+actor[7].regex = '^[^- ,]{7}, [^- ,]{9}( |$)'
 actor[7].links = ( movie[11], movie[12] )
 actor[7].gender= 2
 
 def gender(id):
-        cursor.execute("SELECT `role_id` FROM `cast_info`,`title` WHERE `person_id` = '%s' AND title.id = cast_info.movie_id AND title.production_year >= 2000 AND title.production_year <= 2010 AND (title.kind_id = '1' OR title.kind_id = '3') AND (role_id = 1 OR role_id = 2)" % (id) )
+        cursor.execute("SELECT `role_id` FROM `cast_info`,`title` WHERE `person_id` = '%s' AND title.id = cast_info.movie_id AND title.production_year >= 2000 AND title.production_year <= 2010 AND title.kind_id = '1' AND (role_id = 1 OR role_id = 2)" % (id) )
         Results = cursor.fetchall()
         return Results[0]['role_id']
 
 def howmanymoviestheyhavebeenin(id):
-        cursor.execute("SELECT `movie_id` FROM `cast_info`, `title` WHERE `person_id` = '%s' AND title.id = cast_info.movie_id AND title.production_year >= 2000 AND title.production_year <= 2010 AND (title.kind_id = 1 OR title.kind_id = '3') AND (role_id = 1 OR role_id = 2) AND cast_info.note != '(uncredited)'" % (id))
+        cursor.execute("SELECT `movie_id` FROM `cast_info`, `title` WHERE `person_id` = '%s' AND title.id = cast_info.movie_id AND title.production_year >= 2000 AND title.production_year <= 2010 AND title.kind_id = 1 AND (role_id = 1 OR role_id = 2) AND (cast_info.note != '(uncredited)'  OR cast_info.note IS NULL)" % (id))
         SqlResults = cursor.fetchall()
         movielist = [mov['movie_id'] for mov in SqlResults]
         return len(movielist)
@@ -82,7 +82,16 @@ for x in range(8):
         print "Number of possible actors: %d" % cursor.rowcount
         results = cursor.fetchall()
 	#Turn this dictionary into a tuple
-        actors = tuple([persons['id'] for persons in results])
+        actors = [persons['id'] for persons in results]
+
+        #cursor.execute("SELECT person_id FROM `aka_name` WHERE `name` REGEXP '%s'" % actor[x].regex )
+        #print "Number of possible akas: %d" % cursor.rowcount
+        #results = cursor.fetchall()
+        #akas = [persons['person_id'] for persons in results]
+
+
+	#actors = list(set(actors + akas))
+        #print " Total possible actors: " + str(len(actors))
 
 	# list comprehension to return a list of those actors who have been in links movies or more
 	actors1 = tuple([i for i in actors if howmanymoviestheyhavebeenin(i) >= len(actor[x].links)])
@@ -106,7 +115,7 @@ print "Number of possible actors: %d" % cursor.rowcount
 
 for act in everyactorlist:
         #Lets take each actor/actress and find those that fit our criterea
-        cursor.execute("SELECT `movie_id` FROM `cast_info`, `title` WHERE `person_id` = '%s' AND title.id = cast_info.movie_id AND title.production_year >= 2000 AND title.production_year <= 2010 AND (title.kind_id = 1 OR title.kind_id = '3') AND cast_info.role_id = '2' AND  cast_info.note != '(uncredited)'" % act)
+        cursor.execute("SELECT `movie_id` FROM `cast_info`, `title` WHERE `person_id` = '%s' AND title.id = cast_info.movie_id AND title.production_year >= 2000 AND title.production_year <= 2010 AND title.kind_id = 1 AND cast_info.role_id = '2' AND  ( cast_info.note != '(uncredited)'  OR cast_info.note IS NULL) " % act)
         results = cursor.fetchall()
         movielist = [mov['movie_id'] for mov in results]
         if len(movielist) >= 13:
