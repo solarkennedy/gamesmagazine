@@ -37,28 +37,53 @@ for x in range(9):
 #The example diagram they give is first, last but the imdb data is last,first
 #Question marks stand for 3,4,6, or 9
 # Gener in the imdb, 1 is male and 2 is female
-actor[0].regex = '^[^- ,]{4}, [^- ,]{5}( |$)'
+#actor[0].regex = '^[^- ,]{4}, [^- ,]{5}( |$)'
+#actor[0].links = ( movie[12], movie[1] )
+#actor[0].gender= 2
+#actor[1].regex = '^[^- ,]{4}, [^- ,]{5}( |$)'
+#actor[1].links = ( movie[0], movie[1] )
+#actor[1].gender= 1
+#actor[2].regex = '^[^- ,]{8}, [^- ,]{3}( |$)'
+#actor[2].links = ( movie[1], movie[2] )
+#actor[2].gender= 1
+#actor[3].regex = '^[^- ,]{3}, [^- ,]{7}( |$)'
+#actor[3].links = ( movie[3], movie[4] )
+#actor[3].gender= 2
+#actor[4].regex = '^[^- ,]{7}, [^- ,]{6}( |$)'
+#actor[4].links = ( movie[5], movie[6], movie[7] )
+#actor[4].gender= 2
+#actor[5].regex = '^[^- ,]{7}, [^- ,]{7}( |$)'
+#actor[5].links = ( movie[7], movie[8] )
+#actor[5].gender= 2
+#actor[6].regex = '^[^- ,]{4}, [^- ,]{7}( |$)'
+#actor[6].links = ( movie[9], movie[10] )
+#actor[6].gender= 1
+#actor[7].regex = '^[^- ,]{7}, [^- ,]{9}( |$)'
+#actor[7].links = ( movie[11], movie[12] )
+#actor[7].gender= 2
+
+actor[0].regex = '^(([^- ,]{3})|([^- ,]{4})|([^- ,]{6})|([^- ,]{9})), [^- ,]{5}( |$)'
 actor[0].links = ( movie[12], movie[1] )
 actor[0].gender= 2
-actor[1].regex = '^[^- ,]{4}, [^- ,]{5}( |$)'
+actor[1].regex = '^(([^- ,]{3})|([^- ,]{4})|([^- ,]{6})|([^- ,]{9})), [^- ,]{5}( |$)'
 actor[1].links = ( movie[0], movie[1] )
 actor[1].gender= 1
-actor[2].regex = '^[^- ,]{8}, [^- ,]{3}( |$)'
+actor[2].regex = '^[^- ,]{8}, (([^- ,]{3})|([^- ,]{4})|([^- ,]{6})|([^- ,]{9}))( |$)'
 actor[2].links = ( movie[1], movie[2] )
 actor[2].gender= 1
-actor[3].regex = '^[^- ,]{3}, [^- ,]{7}( |$)'
+actor[3].regex = '^(([^- ,]{3})|([^- ,]{4})|([^- ,]{6})|([^- ,]{9})), [^- ,]{7}( |$)'
 actor[3].links = ( movie[3], movie[4] )
 actor[3].gender= 2
-actor[4].regex = '^[^- ,]{7}, [^- ,]{6}( |$)'
+actor[4].regex = '^[^- ,]{7}, (([^- ,]{3})|([^- ,]{4})|([^- ,]{6})|([^- ,]{9}))( |$)'
 actor[4].links = ( movie[5], movie[6], movie[7] )
 actor[4].gender= 2
 actor[5].regex = '^[^- ,]{7}, [^- ,]{7}( |$)'
 actor[5].links = ( movie[7], movie[8] )
 actor[5].gender= 2
-actor[6].regex = '^[^- ,]{4}, [^- ,]{7}( |$)'
+actor[6].regex = '^(([^- ,]{3})|([^- ,]{4})|([^- ,]{6})|([^- ,]{9})), [^- ,]{7}( |$)'
 actor[6].links = ( movie[9], movie[10] )
 actor[6].gender= 1
-actor[7].regex = '^[^- ,]{7}, [^- ,]{9}( |$)'
+actor[7].regex = '^[^- ,]{7}, (([^- ,]{3})|([^- ,]{4})|([^- ,]{6})|([^- ,]{9}))( |$)'
 actor[7].links = ( movie[11], movie[12] )
 actor[7].gender= 2
 
