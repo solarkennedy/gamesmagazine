@@ -1,0 +1,36 @@
+﻿<!DOCTYPE puzzle PUBLIC "-//conceptispuzzles.com//DTD XHTML 1.1 plus Target 1.0//EN" "dtd/xhtml11-target.dtd">
+<puzzle>
+	<header>
+		<guid>C2A5ECF9-1909-4005-89E7-3DDC7A151994</guid>
+		<code family="00" variant="0" model="10x10" />
+		<serialNumber>90100275</serialNumber>
+		<formatVersion major="2" minor="0" />
+		<builderVersion>4.96</builderVersion>
+		<creationDate>2009-07-24T08:02:57Z</creationDate>
+		<properties>
+			<numeric name="width" value="10" unit="block" />
+			<numeric name="height" value="10" unit="block" />
+			<text name="name">Bird</text>
+			<numeric name="difficulty" value="1" />
+		</properties>
+	</header>
+	<data>
+		<dimensions width="10" height="10" />
+		<palette size="2">
+			<color id="0" rgb="ffffff" />
+			<color id="1" rgb="000000" />
+		</palette>
+		<solution>
+			<row y="0">0 0 1 1 1 1 1 0 0 0</row>
+			<row y="1">0 1 1 0 0 1 1 1 1 0</row>
+			<row y="2">0 1 1 1 0 1 1 1 1 1</row>
+			<row y="3">1 0 0 1 1 1 1 1 1 1</row>
+			<row y="4">1 0 0 0 1 1 1 0 1 1</row>
+			<row y="5">1 0 1 1 0 1 1 0 1 1</row>
+			<row y="6">1 1 0 0 0 1 1 1 0 1</row>
+			<row y="7">1 0 0 0 0 1 1 1 1 0</row>
+			<row y="8">0 0 0 0 0 0 1 1 1 1</row>
+			<row y="9">0 0 0 0 0 0 0 1 1 1</row>
+		</solution>
+	</data>
+</puzzle>

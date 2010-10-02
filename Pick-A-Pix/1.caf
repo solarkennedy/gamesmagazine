@@ -1,0 +1,51 @@
+﻿<!DOCTYPE puzzle PUBLIC "-//conceptispuzzles.com//DTD XHTML 1.1 plus Target 1.0//EN" "dtd/xhtml11-target.dtd">
+<puzzle>
+	<header>
+		<guid>B2018D7F-297A-48F6-A0AF-CA86ED9AA094</guid>
+		<code family="00" variant="0" model="25x25" />
+		<serialNumber>90100417</serialNumber>
+		<formatVersion major="2" minor="0" />
+		<builderVersion>4.96</builderVersion>
+		<creationDate>2010-06-22T13:00:56Z</creationDate>
+		<properties>
+			<numeric name="width" value="25" unit="block" />
+			<numeric name="height" value="25" unit="block" />
+			<text name="name">Tractor</text>
+			<numeric name="difficulty" value="3" />
+		</properties>
+	</header>
+	<data>
+		<dimensions width="25" height="25" />
+		<palette size="2">
+			<color id="0" rgb="ffffff" />
+			<color id="1" rgb="000000" />
+		</palette>
+		<solution>
+			<row y="0">1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0</row>
+			<row y="1">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0</row>
+			<row y="2">1 1 1 1 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0</row>
+			<row y="3">0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0</row>
+			<row y="4">1 1 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0</row>
+			<row y="5">0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 1 1 1 0 1 1 1 0</row>
+			<row y="6">0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 0 1 1 1 0 1 0 1 0</row>
+			<row y="7">0 1 1 1 0 1 1 1 1 0 0 0 0 0 0 0 0 1 1 1 0 1 1 1 0</row>
+			<row y="8">0 1 0 1 0 1 1 1 1 1 0 0 0 1 0 0 0 1 1 1 0 0 1 0 0</row>
+			<row y="9">0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 1 0 0 0 1 0 0</row>
+			<row y="10">0 1 0 0 0 0 0 0 0 0 0 1 1 1 0 1 1 1 1 1 1 1 1 1 0</row>
+			<row y="11">0 1 0 1 1 1 1 1 1 1 0 1 0 1 0 1 0 0 0 0 0 0 0 1 1</row>
+			<row y="12">0 1 0 0 0 0 0 0 0 0 0 1 1 0 0 1 0 0 0 0 0 0 0 1 0</row>
+			<row y="13">0 1 0 1 1 1 1 1 1 0 0 1 1 1 0 1 0 0 0 0 0 0 0 1 0</row>
+			<row y="14">0 0 1 1 1 1 1 1 1 1 0 1 1 1 1 1 0 0 0 0 0 0 0 1 1</row>
+			<row y="15">0 1 1 1 1 1 1 1 1 1 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1</row>
+			<row y="16">1 1 1 1 0 0 0 0 1 1 1 1 0 1 1 0 0 0 0 0 0 0 0 0 1</row>
+			<row y="17">1 1 1 0 0 1 1 0 0 1 1 1 0 1 1 0 0 1 1 1 1 0 0 0 1</row>
+			<row y="18">1 1 1 0 1 1 1 1 0 1 1 1 1 1 1 0 1 1 1 1 1 1 0 0 1</row>
+			<row y="19">1 1 1 0 1 1 1 1 0 1 1 1 0 0 0 1 1 1 0 0 1 1 1 1 1</row>
+			<row y="20">1 1 1 0 0 1 1 0 0 1 1 1 0 0 0 1 1 0 1 1 0 1 1 0 0</row>
+			<row y="21">1 1 1 1 0 0 0 0 1 1 1 1 0 0 0 1 1 0 1 1 0 1 1 1 1</row>
+			<row y="22">0 1 1 1 1 1 1 1 1 1 1 0 0 0 0 1 1 1 0 0 1 1 1 0 0</row>
+			<row y="23">0 0 1 1 1 1 1 1 1 1 0 0 1 0 0 0 1 1 1 1 1 1 0 0 0</row>
+			<row y="24">0 0 0 1 1 1 1 1 1 0 0 1 0 1 0 0 0 1 1 1 1 0 0 0 0</row>
+		</solution>
+	</data>
+</puzzle>

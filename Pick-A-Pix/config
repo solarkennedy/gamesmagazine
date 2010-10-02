@@ -1,0 +1,348 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<config>
+	<common>
+		<library name="gui" url="http://www.conceptispuzzles.com/flash/3/57.swf" />
+		<viewer url="http://www.conceptispuzzles.com/flash/3/73.swf" />
+	</common>
+	<family>
+		<viewer url="http://www.conceptispuzzles.com/flash/1/6.swf" />
+		<player url="http://www.conceptispuzzles.com/flash/2/35.swf" />
+		<tutorial url="http://www.conceptispuzzles.com/flash/6/5.swf" />
+		<interactive url="http://www.conceptispuzzles.com/index.aspx?uri=puzzle/pic-a-pix/interactive" />
+		<nosaveurl url="http://www.conceptispuzzles.com/index.aspx?uri=info/doc/270" />
+		<genealogy name="Pic-a-Pix" code="00" logic="picture" abbreviation="pap" compact="pic-a-pix" />
+		<flags funnel="true" homepage="true" synonym="10" display="solution" />
+		<palette>
+			<color rgb="5D878B" name="border" />
+			<color rgb="E3EAEB" name="background" />
+			<color rgb="BCCED0" name="sidebar" />
+		</palette>
+		<variant>
+			<genealogy code="0" name="B&amp;W" compact="bw" familyRef="00" />
+			<flags funnel="true" />
+		</variant>
+		<variant>
+			<genealogy code="1" name="2Color" compact="2color" familyRef="00" />
+			<flags funnel="true" />
+		</variant>
+		<variant>
+			<genealogy code="2" name="Color" compact="color" familyRef="00" />
+			<flags funnel="true" />
+		</variant>
+		<variant>
+			<genealogy code="3" name="Mega" compact="mega" familyRef="00" />
+			<flags funnel="true" />
+		</variant>
+	</family>
+	<family>
+		<viewer url="http://www.conceptispuzzles.com/flash/1/44.swf" />
+		<player url="http://www.conceptispuzzles.com/flash/2/45.swf" />
+		<tutorial url="http://www.conceptispuzzles.com/flash/6/12.swf" />
+		<interactive url="http://www.conceptispuzzles.com/index.aspx?uri=puzzle/link-a-pix/interactive" />
+		<nosaveurl url="http://www.conceptispuzzles.com/index.aspx?uri=info/doc/270" />
+		<genealogy name="Link-a-Pix" code="02" logic="picture" abbreviation="lap" compact="link-a-pix" />
+		<flags funnel="true" homepage="true" synonym="18" display="solution" />
+		<palette>
+			<color rgb="4A98BF" name="border" />
+			<color rgb="E3ECF5" name="background" />
+			<color rgb="BDD2E6" name="sidebar" />
+		</palette>
+		<variant>
+			<genealogy code="0" name="B&amp;W" compact="bw" familyRef="02" />
+			<flags funnel="true" />
+		</variant>
+		<variant>
+			<genealogy code="1" name="2Color" compact="2color" familyRef="02" />
+			<flags funnel="true" />
+		</variant>
+		<variant>
+			<genealogy code="2" name="Color" compact="color" familyRef="02" />
+			<flags funnel="true" />
+		</variant>
+		<variant>
+			<genealogy code="3" name="Mega" compact="mega" familyRef="02" />
+			<flags funnel="true" />
+		</variant>
+	</family>
+	<family>
+		<viewer url="http://www.conceptispuzzles.com/flash/1/48.swf" />
+		<player url="http://www.conceptispuzzles.com/flash/2/49.swf" />
+		<tutorial url="http://www.conceptispuzzles.com/flash/6/7.swf" />
+		<interactive url="http://www.conceptispuzzles.com/index.aspx?uri=puzzle/fill-a-pix/interactive" />
+		<nosaveurl url="http://www.conceptispuzzles.com/index.aspx?uri=info/doc/270" />
+		<genealogy name="Fill-a-Pix" code="03" logic="picture" abbreviation="fap" compact="fill-a-pix" />
+		<flags funnel="true" homepage="true" synonym="20" display="solution" />
+		<palette>
+			<color rgb="A29100" name="border" />
+			<color rgb="F3F0E1" name="background" />
+			<color rgb="E3DDBB" name="sidebar" />
+		</palette>
+		<variant>
+			<genealogy code="0" name="Basic Logic" compact="basiclogic" familyRef="03" />
+			<flags funnel="true" />
+		</variant>
+		<variant>
+			<genealogy code="1" name="Advanced Logic" compact="advancedlogic" familyRef="03" />
+			<flags funnel="true" />
+		</variant>
+		<variant>
+			<genealogy code="2" name="Mega" compact="mega" familyRef="03" />
+			<flags funnel="true" />
+		</variant>
+	</family>
+	<family>
+		<viewer url="http://www.conceptispuzzles.com/flash/1/54.swf" />
+		<player url="http://www.conceptispuzzles.com/flash/2/55.swf" />
+		<tutorial url="http://www.conceptispuzzles.com/flash/6/20.swf" />
+		<nosaveurl url="http://www.conceptispuzzles.com/index.aspx?uri=info/doc/270" />
+		<genealogy name="Maze-a-Pix" code="04" logic="picture" abbreviation="map" compact="maze-a-pix" />
+		<flags funnel="true" homepage="true" synonym="20" display="solution" />
+		<palette>
+			<color rgb="787D40" name="border" />
+			<color rgb="EAEBDD" name="background" />
+			<color rgb="CECFAF" name="sidebar" />
+		</palette>
+		<variant>
+			<genealogy code="0" name="B&amp;W" compact="bw" familyRef="04" />
+			<flags funnel="true" />
+		</variant>
+		<variant>
+			<genealogy code="1" name="Inverted" compact="inverted" familyRef="04" />
+			<flags funnel="true" />
+		</variant>
+		<variant>
+			<genealogy code="2" name="2Color" compact="2color" familyRef="04" />
+			<flags funnel="false" />
+		</variant>
+		<variant>
+			<genealogy code="3" name="Color" compact="color" familyRef="04" />
+			<flags funnel="true" />
+		</variant>
+		<variant>
+			<genealogy code="4" name="Mega" compact="mega" familyRef="04" />
+			<flags funnel="true" />
+		</variant>
+	</family>
+	<family>
+		<viewer url="http://www.conceptispuzzles.com/flash/1/76.swf" />
+		<player url="http://www.conceptispuzzles.com/flash/2/77.swf" />
+		<tutorial url="http://www.conceptispuzzles.com/flash/6/40.swf" />
+		<nosaveurl url="http://www.conceptispuzzles.com/index.aspx?uri=info/doc/270" />
+		<genealogy name="Dot-a-Pix" code="05" logic="picture" abbreviation="dap" compact="dot-a-pix" />
+		<flags funnel="true" homepage="true" synonym="12" display="solution" />
+		<palette>
+			<color rgb="8191B6" name="border" />
+			<color rgb="E8E8F2" name="background" />
+			<color rgb="D0D1E4" name="sidebar" />
+		</palette>
+		<variant>
+			<genealogy code="0" name="B&amp;W" compact="bw" familyRef="05" />
+			<flags funnel="true" />
+		</variant>
+		<variant>
+			<genealogy code="1" name="2Color" compact="2color" familyRef="05" />
+			<flags funnel="true" />
+		</variant>
+		<variant>
+			<genealogy code="2" name="Color" compact="color" familyRef="05" />
+			<flags funnel="true" />
+		</variant>
+		<variant>
+			<genealogy code="3" name="Multiline" compact="multiline" familyRef="05" />
+			<flags funnel="true" />
+		</variant>
+		<variant>
+			<genealogy code="4" name="Mega" compact="mega" familyRef="05" />
+			<flags funnel="true" />
+		</variant>
+	</family>
+	<family>
+		<viewer url="http://www.conceptispuzzles.com/flash/1/41.swf" />
+		<player url="http://www.conceptispuzzles.com/flash/2/42.swf" />
+		<tutorial url="http://www.conceptispuzzles.com/flash/6/13.swf" />
+		<interactive url="http://www.conceptispuzzles.com/index.aspx?uri=puzzle/sudoku/interactive" />
+		<nosaveurl url="http://www.conceptispuzzles.com/index.aspx?uri=info/doc/270" />
+		<genealogy name="Sudoku" code="06" logic="number" abbreviation="sud" compact="sudoku" />
+		<flags funnel="true" homepage="true" synonym="12" display="puzzle" />
+		<palette>
+			<color rgb="9B6D5F" name="border" />
+			<color rgb="F2EAE0" name="background" />
+			<color rgb="DDCBB1" name="sidebar" />
+		</palette>
+		<variant>
+			<genealogy code="0" name="Classic" compact="classic" familyRef="06" />
+			<flags funnel="true" />
+		</variant>
+		<variant>
+			<genealogy code="1" name="Mini" compact="mini" familyRef="06" />
+			<flags funnel="true" />
+		</variant>
+		<variant>
+			<genealogy code="2" name="Mega" compact="mega" familyRef="06" />
+			<flags funnel="true" />
+		</variant>
+		<variant>
+			<genealogy code="3" name="Irregular" compact="irregular" familyRef="06" />
+			<flags funnel="true" />
+		</variant>
+		<variant>
+			<genealogy code="4" name="Diagonal" compact="diagonal" familyRef="06" />
+			<flags funnel="true" />
+		</variant>
+		<variant>
+			<genealogy code="5" name="Multi" compact="multi" familyRef="06" />
+			<flags funnel="true" />
+		</variant>
+		<variant>
+			<genealogy code="6" name="Sum" compact="sum" familyRef="06" />
+			<flags funnel="true" />
+		</variant>
+		<variant>
+			<genealogy code="7" name="OddEven" compact="oddeven" familyRef="06" />
+			<flags funnel="true" />
+		</variant>
+		<variant>
+			<genealogy code="8" name="Picture" compact="picture" familyRef="06" />
+			<flags funnel="true" />
+		</variant>
+		<variant>
+			<genealogy code="9" name="Chain" compact="chain" familyRef="06" />
+			<flags funnel="true" />
+		</variant>
+	</family>
+	<family>
+		<viewer url="http://www.conceptispuzzles.com/flash/1/46.swf" />
+		<player url="http://www.conceptispuzzles.com/flash/2/47.swf" />
+		<tutorial url="http://www.conceptispuzzles.com/flash/6/22.swf" />
+		<interactive url="http://www.conceptispuzzles.com/index.aspx?uri=puzzle/kakuro/interactive" />
+		<nosaveurl url="http://www.conceptispuzzles.com/index.aspx?uri=info/doc/270" />
+		<genealogy name="Kakuro" code="07" logic="number" abbreviation="kak" compact="kakuro" />
+		<flags funnel="true" homepage="true" synonym="12" display="solution" />
+		<palette>
+			<color rgb="EE863F" name="border" />
+			<color rgb="FEEEC9" name="background" />
+			<color rgb="FDDD93" name="sidebar" />
+		</palette>
+		<variant>
+			<genealogy code="0" name="Classic" compact="classic" familyRef="07" />
+			<flags funnel="true" />
+		</variant>
+		<variant>
+			<genealogy code="1" name="Holey" compact="holey" familyRef="07" />
+			<flags funnel="true" />
+		</variant>
+		<variant>
+			<genealogy code="2" name="Round" compact="round" familyRef="07" />
+			<flags funnel="true" />
+		</variant>
+		<variant>
+			<genealogy code="3" name="Multi" compact="multi" familyRef="07" />
+			<flags funnel="true" />
+		</variant>
+		<variant>
+			<genealogy code="4" name="Diamond" compact="diamond" familyRef="07" />
+			<flags funnel="true" />
+		</variant>
+		<variant>
+			<genealogy code="5" name="Heart" compact="heart" familyRef="07" />
+			<flags funnel="true" />
+		</variant>
+	</family>
+	<family>
+		<viewer url="http://www.conceptispuzzles.com/flash/1/74.swf" />
+		<player url="http://www.conceptispuzzles.com/flash/2/75.swf" />
+		<tutorial url="http://www.conceptispuzzles.com/flash/6/32.swf" />
+		<interactive url="http://www.conceptispuzzles.com/index.aspx?uri=puzzle/battleships/interactive" />
+		<nosaveurl url="http://www.conceptispuzzles.com/index.aspx?uri=info/doc/270" />
+		<genealogy name="Battleships" code="08" logic="number" abbreviation="bat" compact="battleships" />
+		<flags funnel="true" homepage="true" synonym="12" display="solution" />
+		<palette>
+			<color rgb="07679C" name="border" />
+			<color rgb="E5F3FB" name="background" />
+			<color rgb="B0DAF2" name="sidebar" />
+		</palette>
+		<variant>
+			<genealogy code="0" name="Classic" compact="classic" familyRef="08" />
+			<flags funnel="true" />
+		</variant>
+	</family>
+	<family>
+		<viewer url="http://www.conceptispuzzles.com/flash/1/50.swf" />
+		<player url="http://www.conceptispuzzles.com/flash/2/51.swf" />
+		<tutorial url="http://www.conceptispuzzles.com/flash/6/36.swf" />
+		<nosaveurl url="http://www.conceptispuzzles.com/index.aspx?uri=info/doc/270" />
+		<genealogy name="Hitori" code="09" logic="number" abbreviation="hit" compact="hitori" />
+		<flags funnel="true" homepage="true" synonym="12" display="solution" />
+		<palette>
+			<color rgb="387674" name="border" />
+			<color rgb="E8F3F0" name="background" />
+			<color rgb="BAD9D1" name="sidebar" />
+		</palette>
+		<variant>
+			<genealogy code="0" name="Classic" compact="classic" familyRef="09" />
+			<flags funnel="true" />
+		</variant>
+	</family>
+	<family>
+		<viewer url="http://www.conceptispuzzles.com/flash/1/52.swf" />
+		<player url="http://www.conceptispuzzles.com/flash/2/53.swf" />
+		<tutorial url="http://www.conceptispuzzles.com/flash/6/43.swf" />
+		<interactive url="http://www.conceptispuzzles.com/index.aspx?uri=puzzle/slitherlink/interactive" />
+		<nosaveurl url="http://www.conceptispuzzles.com/index.aspx?uri=info/doc/270" />
+		<genealogy name="Slitherlink" code="10" logic="number" abbreviation="sli" compact="slitherlink" />
+		<flags funnel="true" homepage="true" synonym="10" display="solution" />
+		<palette>
+			<color rgb="984457" name="border" />
+			<color rgb="F2E7EA" name="background" />
+			<color rgb="DBBEC4" name="sidebar" />
+		</palette>
+		<variant>
+			<genealogy code="0" name="Classic" compact="classic" familyRef="10" />
+			<flags funnel="true" />
+		</variant>
+	</family>
+	<family>
+		<viewer url="http://www.conceptispuzzles.com/flash/1/78.swf" />
+		<player url="http://www.conceptispuzzles.com/flash/2/79.swf" />
+		<tutorial url="http://www.conceptispuzzles.com/flash/6/69.swf" />
+		<interactive url="http://www.conceptispuzzles.com/index.aspx?uri=puzzle/hashi/interactive" />
+		<nosaveurl url="http://www.conceptispuzzles.com/index.aspx?uri=info/doc/270" />
+		<genealogy name="Hashi" code="11" logic="number" abbreviation="has" compact="hashi" />
+		<flags funnel="true" homepage="true" synonym="10" display="solution" />
+		<palette>
+			<color rgb="778D27" name="border" />
+			<color rgb="E5E9C0" name="background" />
+			<color rgb="D1D88C" name="sidebar" />
+		</palette>
+		<variant>
+			<genealogy code="0" name="Classic" compact="classic" familyRef="11" />
+			<flags funnel="true" />
+		</variant>
+	</family>
+	<family>
+		<viewer url="http://www.conceptispuzzles.com/flash/1/82.swf" />
+		<player url="http://www.conceptispuzzles.com/flash/2/83.swf" />
+		<tutorial url="http://www.conceptispuzzles.com/flash/6/81.swf" />
+		<interactive url="http://www.conceptispuzzles.com/index.aspx?uri=puzzle/calcudoku/interactive" />
+		<nosaveurl url="http://www.conceptispuzzles.com/index.aspx?uri=info/doc/270" />
+		<genealogy name="CalcuDoku" code="13" logic="number" abbreviation="cal" compact="calcudoku" />
+		<flags funnel="true" homepage="true" synonym="10" display="puzzle" />
+		<palette>
+			<color rgb="555C78" name="border" />
+			<color rgb="EDF0F1" name="background" />
+			<color rgb="D0D8DA" name="sidebar" />
+		</palette>
+		<variant>
+			<genealogy code="0" name="SingleOp" compact="singleop" familyRef="13" />
+			<flags funnel="true" />
+		</variant>
+		<variant>
+			<genealogy code="1" name="DualOp" compact="dualop" familyRef="13" />
+			<flags funnel="true" />
+		</variant>
+		<variant>
+			<genealogy code="3" name="QuadOp" compact="quadop" familyRef="13" />
+			<flags funnel="true" />
+		</variant>
+	</family>
+</config>
