@@ -1,6 +1,8 @@
 # Role Playing 4 
 # (c) Kyle Anderson - 2010
 # All code under GPL3, artwork under CC-BY-SA
+# kyle@xkyle.com
+#
 
 === Checking out the Code ===
 # If you haven't already
@@ -27,8 +29,10 @@ python imdbpy2sql.py -d imdb -u "mysql://imdb:imdb@localhost/imdb"
 
 
 #Now that you have the database, you can run the run the program:
+#This will take a while, hours really.
 ./startatthecenter.py
 
 #This uses the actorpossibilities.py file to have the actor possibilities,
 #If you need to regenerate them you can run this:
+#This will take a while, 20min on my Core2 2.6ghz
 ./find-actorpossibilities.py
