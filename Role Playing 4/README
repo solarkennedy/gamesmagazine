@@ -1,5 +1,13 @@
-=== Getting Started ===
+# Role Playing 4 
+# (c) Kyle Anderson - 2010
+# All code under GPL3, artwork under CC-BY-SA
 
+=== Checking out the Code ===
+# If you haven't already
+svn co http://dev.xkyle.com/gamesmagazine
+cd Role\ Playing\ 4
+
+=== Getting Started ===
 #Sql Setup
 CREATE USER 'imdb'@'localhost' IDENTIFIED BY 'imdb';
 GRANT USAGE ON * . * TO 'imdb'@'localhost' IDENTIFIED BY 'imdb';
@@ -16,3 +24,11 @@ cd ..
 cp /usr/share/doc/python-imdbpy/examples/imdbpy2sql.py.gz .
 gunzip imdbpy2sql.py.gz
 python imdbpy2sql.py -d imdb -u "mysql://imdb:imdb@localhost/imdb"
+
+
+#Now that you have the database, you can run the run the program:
+./startatthecenter.py
+
+#This uses the actorpossibilities.py file to have the actor possibilities,
+#If you need to regenerate them you can run this:
+./find-actorpossibilities.py
