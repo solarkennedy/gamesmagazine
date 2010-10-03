@@ -143,10 +143,10 @@ def recurse(level, centeractress, placedactors):
 				recurse(level+1, centeractress, copy.copy(placedactors + [possibleactor]))
 	
 
-print "Going through " + str(len( actor[8].possibilities)) + " actresses for the center"
-for actress in actor[8].possibilities:
-	#Go through each actress and try to fit it into the puzzle
-	placedactors = []
-	placedmovies = []
-	print "We are recursing with " + actorname(actress) + " (" + str(actress) + ")"
-	recurse(0, actress, copy.copy(placedactors) )
+#print "Going through " + str(len( actor[8].possibilities)) + " actresses for the center"
+#for actress in actor[8].possibilities:
+#	#Go through each actress and try to fit it into the puzzle
+#	placedactors = []
+#	placedmovies = []
+#	print "We are recursing with " + actorname(actress) + " (" + str(actress) + ")"
+#	recurse(0, actress, copy.copy(placedactors) )

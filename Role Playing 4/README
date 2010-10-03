@@ -36,3 +36,12 @@ python imdbpy2sql.py -d imdb -u "mysql://imdb:imdb@localhost/imdb"
 #If you need to regenerate them you can run this:
 #This will take a while, 20min on my Core2 2.6ghz
 ./find-actorpossibilities.py
+
+=== IMPORTANT ===
+#The "answers" this thing spits out are not vigorously tested, the program
+#only matches actors who have movies in common, it doesn't actually go through 
+#movies and mark them in their place. 
+#
+#Take the results it gives you and manually check them. After looking through 
+#the few answers, the right one will be a little obvious. The others are either 
+#very foriegn or include documentaries.

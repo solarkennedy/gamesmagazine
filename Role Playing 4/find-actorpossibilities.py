@@ -35,7 +35,9 @@ for x in range(9):
    actor.append(actorclass())
 
 #The example diagram they give is first, last but the imdb data is last,first
-#Question marks stand for 3,4,6, or 9
+
+#These are the extra hints that they gave after the deadline because not enough people answered.
+#We don't need them, we can use the orinal information
 # Gener in the imdb, 1 is male and 2 is female
 #actor[0].regex = '^[^- ,]{4}, [^- ,]{5}( |$)'
 #actor[0].links = ( movie[12], movie[1] )
@@ -62,6 +64,8 @@ for x in range(9):
 #actor[7].links = ( movie[11], movie[12] )
 #actor[7].gender= 2
 
+#Original hints
+#Question marks stand for 3,4,6, or 9
 actor[0].regex = '^(([^- ,]{3})|([^- ,]{4})|([^- ,]{6})|([^- ,]{9})), [^- ,]{5}( |$)'
 actor[0].links = ( movie[12], movie[1] )
 actor[0].gender= 2
@@ -109,21 +113,21 @@ for x in range(8):
 	#Turn this dictionary into a tuple
         actors = [persons['id'] for persons in results]
 
-        #cursor.execute("SELECT person_id FROM `aka_name` WHERE `name` REGEXP '%s'" % actor[x].regex )
-        #print "Number of possible akas: %d" % cursor.rowcount
-        #results = cursor.fetchall()
-        #akas = [persons['person_id'] for persons in results]
-
-
-	#actors = list(set(actors + akas))
-        #print " Total possible actors: " + str(len(actors))
 
 	# list comprehension to return a list of those actors who have been in links movies or more
 	actors1 = tuple([i for i in actors if howmanymoviestheyhavebeenin(i) >= len(actor[x].links)])
 	print " - who have been in at least " +str(len(actor[x].links)) + " movies in the last century: " + str(len(actors1))
+	
+	actors2 = []
+	for act in actors1:
+		#No no-name actors plz
+	        cursor.execute("SELECT * FROM `person_info` WHERE `person_id` = '%s' " % act)
+		if cursor.rowcount > 0:
+        		actors2.append(act)
+        print " - who have person_info: " + str(len(actors2))
 
 	# List comprehension to make a list only containing the gender we need
-	actor[x].possibilities = [i for i in actors1 if gender(i) == actor[x].gender]
+	actor[x].possibilities = [i for i in actors2 if gender(i) == actor[x].gender]
         print " - who are of gender " + str(actor[x].gender) + ": " + str(len(actor[x].possibilities))
 	
 
@@ -144,7 +148,11 @@ for act in everyactorlist:
         results = cursor.fetchall()
         movielist = [mov['movie_id'] for mov in results]
         if len(movielist) >= 13:
-                possibilities.append(act)
+		#We don't want no no-name actors with no info
+        	cursor.execute("SELECT * FROM `person_info` WHERE `person_id` = '%s' " % act)
+        	if cursor.rowcount > 0:
+                	possibilities.append(act)
+
 actor[8].possibilities = possibilities
 print " - Number that are female with more than 12 movies: " + str(len(actor[8].possibilities))
 
