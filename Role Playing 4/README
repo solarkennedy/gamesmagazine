@@ -45,3 +45,5 @@ python imdbpy2sql.py -d imdb -u "mysql://imdb:imdb@localhost/imdb"
 #Take the results it gives you and manually check them. After looking through 
 #the few answers, the right one will be a little obvious. The others are either 
 #very foriegn or include documentaries.
+# 
+#If you use the revised hints, you will get only one answer.
