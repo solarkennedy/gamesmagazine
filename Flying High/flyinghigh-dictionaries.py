@@ -27,6 +27,7 @@ def Recurse(Position,PathTaken):
    if Position == 1:
       print PathTaken
       return
+   # We should never end up on the same square twice, so if our path has more than 18 moves....
    elif len(PathTaken) > 18:
       return
    else: 
@@ -35,19 +36,14 @@ def Recurse(Position,PathTaken):
       myanimal = animalsdict[Position]
       myrow = rowdict[Position]
       mycol = coldict[Position]
-#      print "The square I'm on has these attributes: " + mycolor + myanimal + myrow + mycol
-
       #For possible spaces in my row
-      for Possibility in [(k) for k, v in rowdict.items() if v==myrow and k!=Position and k not in PathTaken]:
+      for Possibility in [(k) for k, v in rowdict.items() if v==myrow and k not in PathTaken]:
          #We are allowed to move if it is the same color or same animal
-#         print "Looking at possible square: " + Possibility
          if mycolor == colorsdict[Possibility] or myanimal == animalsdict[Possibility]:
- #           print "Recursing" + PathTaken + ", plus " + Possibility
             Recurse(Possibility, PathTaken + (Possibility,))
       #For Possible spaces in our same column
-      for Possibility in [(k) for k, v in coldict.items() if v==mycol and k!=Position and k not in PathTaken]:
+      for Possibility in [(k) for k, v in coldict.items() if v==mycol and k not in PathTaken]:
          #We are allowed to move if it is the same color or same animal
-  #       print "Looking at possible square: " + Possibility
          if mycolor == colorsdict[Possibility] or myanimal == animalsdict[Possibility]:
             Recurse(Possibility, PathTaken + (Possibility,))
 

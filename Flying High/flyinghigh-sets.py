@@ -27,7 +27,7 @@ animals = Set([chipmunks,monkeys,bears,foxes])
 blues     = Set([1,3,14,17,18])
 browns    = Set([2,4,7,9,10,16])
 greys     = Set([6,8,11,13,15])
-colors = Set([blues,browns,greys)]
+colors = Set([blues,browns,greys])
 
 #There might be a better way to do this, but I'm sticking with sets:
 row1 = Set([1])
@@ -44,29 +44,29 @@ col3 = Set([1,4,8,12,16])
 col4 = Set([5,9,13,17])
 cols = Set([col1,col2,col3,col4])
 
-#Starting Position 18, go!
-Recurse(18) 
-
 def Recurse(Position,PathTaken):
    if Position == 1:
       print PathTaken
-   else
+      return
+   # We should never end up on the same square twice, so if our path has more than 18 moves....
+   elif len(PathTaken) > 18:
+      return
+   else: 
       # Lets go through our sets and see what our attributes are
-      # Seems like I could have made 
-      mycolor = colorsdict[Position]
-      myanimal = animalsdict[Position]
-      myrow = rowdict[Position]
-      mycol = coldict[Position]
+      mycolorset = [color for color in colors if Position in color]
+      myrow = [animal for animal in animals if Position in animal]
+      myrow = [row for row in rows if Position in row]
+      mycol = [col for col in cols if Position in col]
+      #For possible spaces in my row
+      for Possibility in myrow:
+         #We are allowed to move if it is the same color or same animal
+         if Possibility mycolor or myanimal == animalsdict[Possibility] and Possibility not in PathTaekn:
+            Recurse(Possibility, PathTaken + (Possibility,))
+      #For Possible spaces in our same column
+      for Possibility in [(k) for k, v in coldict.items() if v==mycol and k not in PathTaken]:
+         #We are allowed to move if it is the same color or same animal
+         if mycolor == colorsdict[Possibility] or myanimal == animalsdict[Possibility]:
+            Recurse(Possibility, PathTaken + (Possibility,))
 
-      [(k) for k, v in colorsdict.items() if v=='blue']
-         if Position in row:
-            myrow = row
-      for col in cols:
-         if Position in col:
-            mycol = col
-      for animal in animals:
-         if Position in animal:
-            myanimal = animal
-      for color in colors:
-         if Position in color:
-            mycolor = color
+#Starting Position 18, go!
+Recurse(18,(18,)) 
