@@ -29,7 +29,7 @@ greys     = [6,8,11,13,15]
 pinks	  = [5,12]
 colors = [blues,browns,greys,pinks]
 
-#There might be a better way to do this, but I'm sticking with sets:
+#There might be a better way to do this, but I'm sticking with lists:
 row1 = [1]
 row2 = [2,3,4,5]
 row3 = [6,7,8,9]
@@ -53,6 +53,7 @@ def Recurse(Position,PathTaken):
       return
    else: 
       # Lets go through our sets and see what our attributes are
+      # This list comprehension should return the list which has the right list in it, and only one list, so we want that one, 0.
       mycolor = [color for color in colors if Position in color][0]
       myanimal = [animal for animal in animals if Position in animal][0]
       myrow = [row for row in rows if Position in row][0]
