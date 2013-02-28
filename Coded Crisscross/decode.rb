@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 counter = 0
 lines = []
-file = File.new("coded.txt", "r")
+file = File.new(ARGV[0], "r")
 while (line = file.gets)
     counter = counter + 1
     lines[counter] = line.split.map{|x|(x.to_i+64).chr}
