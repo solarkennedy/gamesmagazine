@@ -27,29 +27,24 @@ class movieclass:
    possibilities = {}
 
 movie = []
-for x in range(0,3):
+for x in range(0,4):
    movie.append(movieclass())
 
 actor = []
-for x in range(1,4):
+for x in range(0,4):
    actor.append(actorclass())
 
 #The example diagram they give is first, last but the imdb data is last,first
 
 #Original hints
-actor[1].regex = '^[^- ,]{7}, [^- ,]{5}( |$)'
-actor[1].links = ( movie[1], movie[0] )
-actor[2].regex = '^[^- ,]{10}, [^- ,]{6}( |$)'
-actor[2].links = ( movie[1], movie[2] )
-actor[3].regex = '^[^- ,]{3}, [^- ,]{7}( |$)'
-actor[3].links = ( movie[2], movie[3] )
-actor[4].regex = '^[^- ,]{11}, [^- ,]{8}( |$)'
-actor[4].links = ( movie[3], movie[0] )
-
-def gender(id):
-        cursor.execute("SELECT `role_id` FROM `cast_info`,`title` WHERE `person_id` = '%s' AND title.id = cast_info.movie_id AND title.production_year >= 2000 AND title.production_year <= 2010 AND title.kind_id = '1' AND (role_id = 1 OR role_id = 2)" % (id) )
-        Results = cursor.fetchall()
-        return Results[0]['role_id']
+actor[0].regex = '^[^- ,]{7}, [^- ,]{5}( |$)'
+actor[0].links = ( movie[1], movie[0] )
+actor[1].regex = '^[^- ,]{10}, [^- ,]{6}( |$)'
+actor[1].links = ( movie[1], movie[2] )
+actor[2].regex = '^[^- ,]{3}, [^- ,]{7}( |$)'
+actor[2].links = ( movie[2], movie[3] )
+actor[3].regex = '^[^- ,]{11}, [^- ,]{8}( |$)'
+actor[3].links = ( movie[3], movie[0] )
 
 def howmanymoviestheyhavebeenin(id):
         cursor.execute("SELECT `movie_id` FROM `cast_info`, `title` WHERE `person_id` = '%s' AND title.id = cast_info.movie_id AND title.production_year >= 2000 AND title.production_year <= 2010 AND title.kind_id = 1 AND (role_id = 1 OR role_id = 2) AND (cast_info.note != '(uncredited)'  OR cast_info.note IS NULL)" % (id))
@@ -59,7 +54,7 @@ def howmanymoviestheyhavebeenin(id):
 
 
 # Populate all possible actor names based on regex
-for x in range(8):
+for x in range(len(actor)):
         print "Finding possible actors for node " + str(x)
         print "   regex: " + actor[x].regex
         cursor.execute("SELECT id FROM `name` WHERE `name` REGEXP '%s'" % actor[x].regex )
@@ -81,10 +76,6 @@ for x in range(8):
         		actors2.append(act)
         print " - who have person_info: " + str(len(actors2))
 
-	# List comprehension to make a list only containing the gender we need
-	actor[x].possibilities = [i for i in actors2 if gender(i) == actor[x].gender]
-        print " - who are of gender " + str(actor[x].gender) + ": " + str(len(actor[x].possibilities))
-	
 
 
 #Now lets go for the middle
@@ -108,12 +99,9 @@ for act in everyactorlist:
         	if cursor.rowcount > 0:
                 	possibilities.append(act)
 
-actor[8].possibilities = possibilities
-print " - Number that are female with more than 12 movies: " + str(len(actor[8].possibilities))
-
 #Populate the file to make it faster
 f = open('actorpossibilities.py','w')
-for x in range(9):
+for x in range(len(actor)):
 	f.write("actor[" + str(x)  +  "].possibilities = " + str(actor[x].possibilities) )
 	f.write("\n")
 f.close()
