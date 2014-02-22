@@ -10,5 +10,5 @@ imdb:
 
 db:
 	cp /usr/share/doc/python-imdbpy/examples/imdbpy2sql.py.gz .
-	gunzip imdbpy2sql.py.gz
-	python imdbpy2sql.py --sqlite-transactions -d imdb -u "sqlite://dev/shm/imdb.db"
+	gunzip -f imdbpy2sql.py.gz
+	python imdbpy2sql.py --sqlite-transactions -d imdb -u "sqlite:/tmp/imdb.db"
