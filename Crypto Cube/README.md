@@ -1,4 +1,4 @@
-<Image:GamesMay09.gif>\
+![CryptoCube](Image:GamesMay09.gif)
 Each square stands for a letter of the alphabet, and corresponding
 squares on different faces stand for the same letter. What three English
 names of numbers do the three paths spell?
