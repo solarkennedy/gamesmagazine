@@ -5,7 +5,8 @@ categories:
 Original Rules
 --------------
 
-![](GamesMagazineContest29.gif "image")\
+![](GamesMagazineContest29.gif)
+
 This online contest is similar to our previous online Role Playing
 contests ( 1, 2 , and 3). In the diagram below, each diamond represents
 a film and each circle represents an actor (blue) or actress (pink).
@@ -43,13 +44,6 @@ with each. I used a separate list for movies versus actors.
 
 Solution
 --------
-
-Want to solve it for yourself with the code I wrote? You can! First you
-have to check out my code via svn: svn co
-<http://dev.xkyle.com/gamesmagazine> cd gamesmagazine/Role\\ Playing\\
-4/
-
-Check out the README file: vi README
 
 Setup your own mysql server, add a imdb user, create the imdb database,
 import the data, run the program according to the README instructions.
