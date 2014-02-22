@@ -4,7 +4,7 @@ octagons and squares.
 
 ### Solution Image
 
-<Image:22.jpg>
+![solution](Image:22.jpg)
 
 ### Best Solution I Found
 
