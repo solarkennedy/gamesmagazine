@@ -4,6 +4,7 @@ import sys
 import pprint
 import re
 import copy
+import string
 
 intersecting_letters = tuple("AAACEGHIMRRSSUUVZ".lower()[::-1])
 intersecting_spaces = ( \
@@ -55,14 +56,25 @@ def sort_wordlist(wordlist):
         sorted_dict[len(word)].append(word)
     return sorted_dict
 
-def read_wordlist(words_file='nouns.txt'):
+def read_wordlist(words_file='/usr/share/dict/words'):
+#def read_wordlist(words_file='nouns.txt'):
     wordlist=[]
     valid_re=re.compile('^[a-z]+$')
+
+    # We take the pools of letters that are in the super set of total possible letters
+    # to choose from, and we subtract them from the set of all letters.
+    # The leftovers cannot be in any possible word.
+    # The regex only matches words that do NOT have those blacklisted characters
+    invalid_letters = set(string.ascii_lowercase) - set(non_intersecting_letters+intersecting_letters)
+    invalid_letter_pattern = '^[^' + ''.join(invalid_letters) + ']*$'
+    invalid_letter_regex = re.compile(invalid_letter_pattern)
+
     for word in open(words_file):
-        if valid_re.match(word):
+        if valid_re.match(word) and invalid_letter_regex.match(word):
             wordlist.append(word.strip())
     import random
     random.shuffle(wordlist)
+    print "Wordlist length: " + str(len(wordlist))
     return wordlist
 
 def print_board(board):
@@ -101,13 +113,15 @@ def current_slot_regex(slot_num, board):
 
 def words_with_right_regex(regex, words):
     matches = []
+    reg = re.compile(regex)
     for word in words:
-        if re.match(regex, word):
+        if reg.match(word):
             matches.append(word)
     return matches
 
 def seed_board():
     board = [ list(" " * 18) for _ in range(18) ]
+    non_intersecting_regex = '[' + ''.join(set(list(non_intersecting_letters))) + ']'
     for word_num in range(len(slots)):
         slot = slots[word_num+1]
         for n in range(slot['length']): 
@@ -117,7 +131,14 @@ def seed_board():
             else:
                 y = slot['y'] + n
                 x = slot['x']
-            board[x][y]='.'
+            board[x][y]=non_intersecting_regex
+    # Prepopulate intersecting spaces with a limited regex
+    # based on the possible intersecting characters
+    intersectin_regex = '[' + ''.join(set(list(intersecting_letters))) + ']'
+    for intersecting_space in intersecting_spaces:
+        x = intersecting_space[0]
+        y = intersecting_space[1]
+        board[x][y] = intersectin_regex
     return board
 
 def possible_normal_words(slot_number, intersect_pool, non_intersect_pool, board_so_far):
@@ -125,6 +146,32 @@ def possible_normal_words(slot_number, intersect_pool, non_intersect_pool, board
     right_length = words_with_length[slots[slot_number]['length']]
     right_regex = words_with_right_regex(slot_regex, right_length)
     return right_regex
+
+def seed_word(slot_num, word, intersect_pool, non_intersect_pool, board):
+    slot = slots[slot_num]
+    x = slot['x']
+    y = slot['y']
+    for n in range(slot['length']):
+        if (x,y) in intersecting_spaces:
+            intersecting = True
+        else:
+            intersecting = False
+        # Remove the letter if it is not already in the board
+        if board[x][y] != word[n]:
+            if intersecting == True and word[n] in intersect_pool:
+                intersect_pool.remove(word[n])
+            elif intersecting == False and word[n] in non_intersect_pool:
+                non_intersect_pool.remove(word[n])
+            else:
+                raise "There isn't enough letters in the pool!"
+        board[x][y] = word[n]
+        if slot['direction'] == 'across':
+            x += 1
+        else:
+            y += 1
+    #If we did get here, the word fit!
+    print_board(board)
+
 
 def try_to_fit(possible_word, words_so_far, intersect_pool, non_intersect_pool, board):
     slot_number = len(words_so_far) + 1
@@ -151,15 +198,14 @@ def try_to_fit(possible_word, words_so_far, intersect_pool, non_intersect_pool, 
             y += 1
     #If we did get here, the word fit!
     words_so_far.append(possible_word)
+#    print_board(board)
     recursive_solve(copy.deepcopy(words_so_far), copy.deepcopy(intersect_pool), copy.deepcopy(non_intersect_pool), copy.deepcopy(board))
 
 def recursive_solve(words_so_far, intersect_pool, non_intersect_pool, board_so_far):
     solving_for_word = len(words_so_far) + 1
-    if solving_for_word == 12 :
+    if solving_for_word == 10:
         print "OMG WE ARE DONE: Word so far: " + str(words_so_far)
-        print "Our remaining intersecting letters should be zero: " + "".join(intersect_pool)
-        print "Our remaining non-intersecting letters should be zero: " + ''.join(non_intersect_pool)
-        print "The Board: "
+        print "Our remaining letters (in,non-in): " + "".join(intersect_pool) + "," + "".join(non_intersect_pool)
         print_board(board_so_far)
         return 
     else:
