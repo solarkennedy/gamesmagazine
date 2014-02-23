@@ -1,0 +1,14 @@
+#!/bin/bash
+IFS='
+'
+
+echo -n '' > .nouns.txt
+for WORD in `cat nounlist.txt`
+do
+
+  grep ^$WORD /usr/share/dict/words >> .nouns.txt
+
+done
+
+sort -u .nouns.txt  > nouns.txt
+rm .nouns.txt

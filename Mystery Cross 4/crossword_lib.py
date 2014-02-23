@@ -55,7 +55,7 @@ def sort_wordlist(wordlist):
         sorted_dict[len(word)].append(word)
     return sorted_dict
 
-def read_wordlist(words_file='nounlist.txt'):
+def read_wordlist(words_file='nouns.txt'):
     wordlist=[]
     valid_re=re.compile('^[a-z]+$')
     for word in open(words_file):
@@ -155,7 +155,7 @@ def try_to_fit(possible_word, words_so_far, intersect_pool, non_intersect_pool, 
 
 def recursive_solve(words_so_far, intersect_pool, non_intersect_pool, board_so_far):
     solving_for_word = len(words_so_far) + 1
-    if solving_for_word == 13 :
+    if solving_for_word == 12 :
         print "OMG WE ARE DONE: Word so far: " + str(words_so_far)
         print "Our remaining intersecting letters should be zero: " + "".join(intersect_pool)
         print "Our remaining non-intersecting letters should be zero: " + ''.join(non_intersect_pool)
