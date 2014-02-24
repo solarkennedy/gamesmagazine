@@ -1,2 +1,3 @@
 imdb/
 imdb.db
+*.pyc

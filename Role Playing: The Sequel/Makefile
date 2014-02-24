@@ -2,7 +2,7 @@ db_init:
 	mysql -u root < dbinit.sql
 
 deps:
-	sudo apt-get install python-imdbpy python-sqlalchemy python-mysqldb python-sqlobject mysql-server
+	sudo apt-get install python-imdbpy sqlite3-pcre
 
 imdb:
 	mkdir imdb
