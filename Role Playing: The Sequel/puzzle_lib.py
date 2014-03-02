@@ -118,8 +118,6 @@ class Movie:
    possibilities = {}
    node = False
 
-
-
 def filter_results(cursor, actors):
     # list comprehension to return a list of those actors who have been in 2 movies or more
     filtred1 = tuple([i for i in actors if imdb_lib.howmanymoviestheyhavebeenin(cursor, i) >= 2])
@@ -132,3 +130,36 @@ def filter_results(cursor, actors):
                     actors2.append(act)
     print " - who have person_info: " + str(len(actors2))
     return actors2
+
+def get_actor_list(cursor):
+    if os.path.isfile('actor_possibilities.p'):
+        print "Using cached actor possibitilties file."
+        actors = pickle.load( open('actor_possibilities.p', 'r') )
+    else:
+        actors = puzzle_lib.setup_actors()
+        for n in range(16):
+            print "Finding possible actor for node " + str(actors[n].node)
+            print "   regex: " + actors[n].regex
+            results = imdb_lib.search_actors(cursor, actors[n].regex)
+            actors[n].possibilities = results
+            print "   Found " + str(len(results)) + " actors that matched."
+        print "Dumping actors into a file"
+        pickle.dump( actors, open('actor_possibilities.p', 'wb') )
+    return actors
+
+def get_movie_list(cursor):
+    if os.path.isfile('movie_possibilities.p'):
+        print "Using cached movie possibitilties file."
+        movies = pickle.load( open('movie_possibilities.p', 'r') )
+    else:
+        movies = puzzle_lib.setup_movies()
+        for movie in movies:
+            print "Finding possible movies for node " + str(movie.node)
+            print "   regex: " + movie.regex
+            results = imdb_lib.search_movies(cursor, movie.regex)
+            print "   Found " + str(len(results)) + " movies that matched."
+            movie.possibilities = results
+        print "Dumping movies into a file"
+        pickle.dump( movies, open('movie_possibilities.p', 'wb') )
+
+
