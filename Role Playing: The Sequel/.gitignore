@@ -1,3 +1,4 @@
 imdb/
 imdb.db
 *.pyc
+*.p
