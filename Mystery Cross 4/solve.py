@@ -27,12 +27,12 @@ if __name__ == '__main__':
 #    board_so_far[7][17] = 'o'
 #    non_intersect_pool.remove('o')
 
-    #board_so_far[1][6] = 'm'
-    #intersect_pool.remove('m')
+    board_so_far[1][6] = 'm'
+    intersect_pool.remove('m')
 
  
-    crossword_lib.seed_word(2, 'pretzel', intersect_pool, non_intersect_pool, board_so_far)
-#    crossword_lib.seed_word(5, 'doughnut', intersect_pool, non_intersect_pool, board_so_far)
+    crossword_lib.seed_word(8, 'oboe', intersect_pool, non_intersect_pool, board_so_far)
+#    crossword_lib.seed_word(2, 'z', intersect_pool, non_intersect_pool, board_so_far)
 #    crossword_lib.seed_word(9, 'prophet', intersect_pool, non_intersect_pool, board_so_far)
 #    crossword_lib.seed_word(6, 'saviour', intersect_pool, non_intersect_pool, board_so_far)
 
