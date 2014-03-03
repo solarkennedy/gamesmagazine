@@ -60,23 +60,28 @@ def search_movies(cursor, regex):
 def actor_id_to_name(cursor, id):
     cursor.execute("SELECT `name` FROM `name` WHERE `id` = '%s'" % (id))
     Results = cursor.fetchall()
-    return Results[0]
+    return str(Results[0][0].encode('utf-8'))
 
 def movie_id_to_name(cursor, id):
-    cursor.execute("SELECT `imdb_id`, `title`, `production_year` FROM `title` WHERE `id` = '%s'" % (id))
+    cursor.execute("SELECT `title` FROM `title` WHERE `id` = '%s'" % (id))
     Result = cursor.fetchall()
-    return Result[0]
+    return str(Result[0][0].encode('utf-8'))
+
+def actors_in(cursor, id):
+    cursor.execute("select `person_id` from `cast_info` where `movie_id` = '%s' AND (role_id = 1 OR role_id = 2 AND (cast_info.note != '(uncredited)'  OR cast_info.note IS NULL))" % (id)) 
+    Result = cursor.fetchall()
+    return set([actor[0] for actor in Result])
 
 def movies_actor_has_been_in(cursor, id):
-    cursor.execute("SELECT `movie_id` FROM `cast_info`, `title` WHERE `person_id` = '%s' AND title.id = cast_info.movie_id AND title.production_year >= 2000 AND title.production_year <= 2010 AND title.kind_id = '1' AND (role_id = 1 OR role_id = 2 AND (cast_info.note != '(uncredited)'  OR cast_info.note IS NULL))" % (id) )
+    cursor.execute("SELECT `movie_id` FROM `cast_info`, `title` WHERE `person_id` = '%s' AND title.id = cast_info.movie_id AND title.production_year <= 2014 AND title.kind_id = '1' AND (role_id = 1 OR role_id = 2 AND (cast_info.note != '(uncredited)'  OR cast_info.note IS NULL))" % (id) )
     SqlResults = cursor.fetchall()
     return list(set([mov[0] for mov in SqlResults]))
 
 def moviestheyhavebeenin(cursor, actor_id):
-    cursor.execute("SELECT `movie_id` FROM `cast_info`, `title` WHERE `person_id` = '%s' AND title.id = cast_info.movie_id AND title.production_year >= 2000 AND title.production_year <= 2010 AND title.kind_id = 1 AND (role_id = 1 OR role_id = 2) AND (cast_info.note != '(uncredited)'  OR cast_info.note IS NULL)" % (actor_id))
+    cursor.execute("SELECT `movie_id` FROM `cast_info`, `title` WHERE `person_id` = '%s' AND title.id = cast_info.movie_id AND title.production_year <= 2014 AND title.kind_id = 1 AND (role_id = 1 OR role_id = 2) AND (cast_info.note != '(uncredited)'  OR cast_info.note IS NULL)" % (actor_id))
     SqlResults = cursor.fetchall()
     # We have a tuple of dictionaries from our mysql, but we just want a big tuple:
-    return list(set([mov['movie_id'] for mov in SqlResults]))
+    return set([mov[0] for mov in SqlResults])
 
 def howmanymoviestheyhavebeenin(cursor, actor_id):
     return len(moviestheyhavebeenin(cursor, actor_id))
