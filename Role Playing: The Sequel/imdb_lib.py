@@ -32,7 +32,7 @@ def movie_has_description(cursor, id):
         return False
 
 def search_actors(cursor, regex):
-    SQL = "SELECT id FROM `name` WHERE `name` REGEXP '%s'" % regex 
+    SQL = "SELECT id FROM `name` WHERE `name` REGEXP '%s';" % regex 
     cursor.execute(SQL)
     results = [ x[0] for x in cursor.fetchall() ]
     good_results = []
@@ -44,18 +44,25 @@ def search_actors(cursor, regex):
     return tuple(good_results)
 
 def search_movies(cursor, regex):
-    # We slightly optimize here by sorting at the SQL level by production year
-    # This allows us to have the solver try recent movies first
-    SQL = "SELECT id FROM `title` WHERE `title` REGEXP '%s' ORDER BY `production_year` DESC" % regex 
+    SQL = "SELECT id FROM `title` WHERE `title` REGEXP '%s';" % regex 
     cursor.execute(SQL)
     results = [ x[0] for x in cursor.fetchall() ]
     good_results = []
     for result in results:
         # Another optimization. There are lots of "duplicate" entries
         # in the imdb, and movies that don't yet exist, etc.
-        if movie_has_description(cursor, result) and is_movie_a_short(cursor, result) == False: 
+        if is_movie_a_short(cursor, result) == False: 
             good_results.append(result)
-    return tuple(good_results)
+    # Second query, some titles have AKA titles, add those too.
+    SQL = "SELECT `movie_id` FROM `aka_title` where `title` REGEXP '%s';" % regex
+    cursor.execute(SQL)
+    results = [ x[0] for x in cursor.fetchall() ]
+    for result in results:
+        # Another optimization. There are lots of "duplicate" entries
+        # in the imdb, and movies that don't yet exist, etc.
+        if is_movie_a_short(cursor, result) == False: 
+            good_results.append(result)
+    return set(good_results)
 
 def actor_id_to_name(cursor, id):
     cursor.execute("SELECT `name` FROM `name` WHERE `id` = '%s'" % (id))
