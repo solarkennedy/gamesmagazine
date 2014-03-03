@@ -147,45 +147,32 @@ class Board:
     def find_possible_movies(self, cursor, slot):
         print "  Trying to find possible movies for slot " + str(slot)
         possibilities_so_far = set(self.movies[slot].possibilities)
-        print "   DEBUG: Initial Possibilties: " + str(len(possibilities_so_far))
+        #print "   DEBUG: Initial Possibilties: " + str(len(possibilities_so_far))
         for link in self.movies[slot].links:
             if self.actors[link].imdb_id != False:
                 possibilities_so_far = possibilities_so_far.intersection(imdb_lib.movies_actor_has_been_in(cursor, self.actors[link].imdb_id))
-                for n in imdb_lib.movies_actor_has_been_in(cursor, self.actors[link].imdb_id):
-                    print "    DBUG: movies " + imdb_lib.actor_id_to_name(cursor,self.actors[link].imdb_id) + " have been in: " + imdb_lib.movie_id_to_name(cursor, n) + " (" + str(n) + ")"
+                #for n in imdb_lib.movies_actor_has_been_in(cursor, self.actors[link].imdb_id):
+                #    print "    DBUG: movies " + imdb_lib.actor_id_to_name(cursor,self.actors[link].imdb_id) + " have been in: " + imdb_lib.movie_id_to_name(cursor, n) + " (" + str(n) + ")"
                 for n in possibilities_so_far:
-                    print "    DBUG: Slot " + str(slot) + " Narrowed down to: " + imdb_lib.movie_id_to_name(cursor, n)
+                    print "    DEBUG: Slot " + str(slot) + " Narrowed down to: " + imdb_lib.movie_id_to_name(cursor, n)
         return possibilities_so_far
     def find_possible_actors(self, cursor, n):
         print "  Trying to find possible actors for slot " + str(n)
         if self.actors[n].hint == False:
             # Special Case:
             # If we don't have a hint, we must behave differently to get a list of possible actors
+            # Start with the set of actors in the movies in the first link
+            possibilities_so_far = imdb_lib.actors_in(cursor, self.movies[self.actors[n].links[0]].imdb_id)
             for n in self.actors[n].links:
                 if self.movies[n].imdb_id != False:
-                    possibilities_so_far = imdb_lib.actors_in(cursor, self.movies[n].imdb_id)
+                    possibilities_so_far = possibilities_so_far.intersection(imdb_lib.actors_in(cursor, self.movies[n].imdb_id))
         else:
             possibilities_so_far = set(self.actors[n].possibilities)
             for n in self.actors[n].links:
-                print "   DEBUG: There are " + str(len(possibilities_so_far)) + " poss so far" 
+                print "   DEBUG: There are " + str(len(possibilities_so_far)) + " possibilities for so far" 
                 if self.movies[n].imdb_id != False:
                     possibilities_so_far = possibilities_so_far.intersection(imdb_lib.actors_in(cursor, self.movies[n].imdb_id))
-                    for n in possibilities_so_far:
-                        print "    DBUG: possibility: " + imdb_lib.actor_id_to_name(cursor, n)
         return possibilities_so_far
-
-def filter_results(cursor, actors):
-    # list comprehension to return a list of those actors who have been in 2 movies or more
-    filtred1 = tuple([i for i in actors if imdb_lib.howmanymoviestheyhavebeenin(cursor, i) >= 2])
-    print " - who have been in at least 2 movies in the last century: " + str(len(filtered1))
-    actors2 = []
-    for act in actors1:
-            #No no-name actors plz
-            cursor.execute("SELECT * FROM `person_info` WHERE `person_id` = '%s' " % act)
-            if cursor.rowcount > 0:
-                    actors2.append(act)
-    print " - who have person_info: " + str(len(actors2))
-    return actors2
 
 def get_actor_list(cursor):
     if os.path.isfile('actor_possibilities.p'):
