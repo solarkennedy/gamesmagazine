@@ -20,24 +20,32 @@ def solve_early_game(cursor, board):
     else:
         print "Entering early game"
         board.print_progress(cursor)
-        for quad in range(0, 15, 4):
-           for n in range(quad, quad+4):
-               if board.movies[n].imdb_id == False:
-                   # Fit the board with a movie that could work
-                   for possibility in board.find_possible_movies(cursor, n):
-                       print "   Possible movie for slot " + str(n) + ": " + imdb_lib.movie_id_to_name(cursor, possibility)
-                   for possibility in board.find_possible_movies(cursor, n):
-                       board.movies[n].imdb_id = possibility
-                       solve_early_game(cursor,copy.deepcopy(board))
-                   return False
-               elif board.actors[n].imdb_id == False:
-                   # Fit the board with a potential actor
-                   for possibility in board.find_possible_actors(cursor, n):
-                       print "   Possible actor for slot " + str(n) + ": " + imdb_lib.actor_id_to_name(cursor, possibility)
-                   for possibility in board.find_possible_actors(cursor, n):
-                       board.actors[n].imdb_id = possibility
-                       solve_early_game(cursor,copy.deepcopy(board))
-                   return False
+        for n in range(0, 15):
+            if n % 4 == 0 and board.actors[n/4 + 15].imdb_id == False and n != 0:
+                # Special spot. Try to fill in our missing actor to help hint future locations
+                n = n/4 + 15
+                for possibility in board.find_possible_actors(cursor, n):
+                    print "   Possible actor for special slot " + str(n) + ": " + imdb_lib.actor_id_to_name(cursor, possibility)
+                for possibility in board.find_possible_actors(cursor, n):
+                    board.actors[n].imdb_id = possibility
+                    solve_early_game(cursor,copy.deepcopy(board))
+                return False
+            elif board.movies[n].imdb_id == False:
+                # Fit the board with a movie that could work
+                for possibility in board.find_possible_movies(cursor, n):
+                    print "   Possible movie for slot " + str(n) + ": " + imdb_lib.movie_id_to_name(cursor, possibility)
+                for possibility in board.find_possible_movies(cursor, n):
+                    board.movies[n].imdb_id = possibility
+                    solve_early_game(cursor,copy.deepcopy(board))
+                return False
+            elif board.actors[n].imdb_id == False:
+                # Fit the board with a potential actor
+                for possibility in board.find_possible_actors(cursor, n):
+                    print "   Possible actor for slot " + str(n) + ": " + imdb_lib.actor_id_to_name(cursor, possibility)
+                for possibility in board.find_possible_actors(cursor, n):
+                    board.actors[n].imdb_id = possibility
+                    solve_early_game(cursor,copy.deepcopy(board))
+                return False
     # If we got this far, we don't need to do anything else
     # because the previous fittings should recurse and hit a situation where 
     # the first pass is complete

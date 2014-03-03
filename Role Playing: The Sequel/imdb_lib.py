@@ -53,7 +53,7 @@ def search_movies(cursor, regex):
     for result in results:
         # Another optimization. There are lots of "duplicate" entries
         # in the imdb, and movies that don't yet exist, etc.
-        if movie_has_description(cursor, result): 
+        if movie_has_description(cursor, result) and is_movie_a_short(cursor, result) == False: 
             good_results.append(result)
     return tuple(good_results)
 
@@ -72,19 +72,21 @@ def actors_in(cursor, id):
     Result = cursor.fetchall()
     return set([actor[0] for actor in Result])
 
-def movies_actor_has_been_in(cursor, id):
-    cursor.execute("SELECT `movie_id` FROM `cast_info`, `title` WHERE `person_id` = '%s' AND title.id = cast_info.movie_id AND title.production_year <= 2014 AND title.kind_id = '1' AND (role_id = 1 OR role_id = 2 AND (cast_info.note != '(uncredited)'  OR cast_info.note IS NULL))" % (id) )
-    SqlResults = cursor.fetchall()
-    return list(set([mov[0] for mov in SqlResults]))
+def is_movie_a_short(cursor, id):
+    cursor.execute("select info from movie_info where movie_id = '%s' and info_type_id = 3;" % (id))
+    results = cursor.fetchall()
+    for result in results:
+        if result[0] == 'Short':
+            return True
+    return False
 
-def moviestheyhavebeenin(cursor, actor_id):
-    cursor.execute("SELECT `movie_id` FROM `cast_info`, `title` WHERE `person_id` = '%s' AND title.id = cast_info.movie_id AND title.production_year <= 2014 AND title.kind_id = 1 AND (role_id = 1 OR role_id = 2) AND (cast_info.note != '(uncredited)'  OR cast_info.note IS NULL)" % (actor_id))
+def movies_actor_has_been_in(cursor, id):
+    cursor.execute("SELECT `movie_id` FROM `cast_info`, `title` WHERE `person_id` = '%s' AND title.id = cast_info.movie_id AND title.production_year <= 2014 AND title.kind_id = '1' AND (cast_info.role_id = 1 OR cast_info.role_id = 2 AND (cast_info.note != '(uncredited)'  OR cast_info.note IS NULL))" % (id) )
     SqlResults = cursor.fetchall()
-    # We have a tuple of dictionaries from our mysql, but we just want a big tuple:
-    return set([mov[0] for mov in SqlResults])
+    return set([mov[0] for mov in SqlResults if is_movie_a_short(cursor, mov) == False])
 
 def howmanymoviestheyhavebeenin(cursor, actor_id):
-    return len(moviestheyhavebeenin(cursor, actor_id))
+    return len(movies_actor_has_been_in(cursor, actor_id))
 
 def actor_search(cursor, regex):
     cursor.execute("SELECT id FROM `name` WHERE `name` REGEXP '%s'" % regex )

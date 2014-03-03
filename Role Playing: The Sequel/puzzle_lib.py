@@ -44,10 +44,10 @@ def setup_actors():
     actors[13].links = ( 13, 14 )
     actors[14].links = ( 14, 15 )
     actors[15].links = ( 12, 15 )
-    actors[16].links = ( 0, 15 )
-    actors[17].links = ( 3, 4 )
-    actors[18].links = ( 7, 8 )
-    actors[19].links = ( 11, 2 )
+    actors[16].links = ( 3, 4 )
+    actors[17].links = ( 7, 8 )
+    actors[18].links = ( 11, 2 )
+    actors[19].links = ( 0, 15 )
     for n in range(16):
         #The example diagram they give is first, last but the imdb data is last,first
         actors[n].regex = '^[^- ,]{' + str(actors[n].hint[1]) + '}, [^- ,]{' + str(actors[n].hint[0]) +  '}( |$)'
@@ -78,22 +78,22 @@ def setup_movies():
     movies[14].hint = ( 12, )
     movies[15].hint = ( 3, 2, 3, 7 )
     # Links describe the actors that are in them
-    movies[0].links  = ( 0, 3, 16 )
+    movies[0].links  = ( 0, 3, 19 )
     movies[1].links  = ( 0, 1, )
     movies[2].links  = ( 1, 2, )
-    movies[3].links  = ( 2, 3, 17 )
-    movies[4].links  = ( 5, 4, 17 )
-    movies[5].links  = ( 5, 6, )
-    movies[6].links  = ( 6, 7, )
-    movies[7].links  = ( 4, 7, 18 )
-    movies[8].links  = ( 8, 9, 18 )
-    movies[9].links  = ( 9, 10, )
-    movies[10].links = ( 10, 11, )
-    movies[11].links = ( 8, 11, 19 )
-    movies[12].links = ( 12, 13, 19 )
-    movies[13].links = ( 13, 14, )
-    movies[14].links = ( 14, 15, )
-    movies[15].links = ( 12, 15, 16 )
+    movies[3].links  = ( 2, 3, 16 )
+    movies[4].links  = ( 4, 7, 16 )
+    movies[5].links  = ( 4, 5, )
+    movies[6].links  = ( 5, 6, )
+    movies[7].links  = ( 6, 7, 17 )
+    movies[8].links  = ( 8, 11, 17 )
+    movies[9].links  = ( 8, 9, )
+    movies[10].links = ( 9, 10, )
+    movies[11].links = ( 10, 11, 18 )
+    movies[12].links = ( 12, 15, 18 )
+    movies[13].links = ( 12, 13, )
+    movies[14].links = ( 13, 14, )
+    movies[15].links = ( 14, 15, 19 )
     for n in range(16):
        movie_regexes = []
        for hint in movies[n].hint:
@@ -140,10 +140,10 @@ class Board:
     def print_progress(self,cursor):
         for movie in self.movies:
             if movie.imdb_id:
-                print "Movie Node " + str(movie.node) + ": " + imdb_lib.movie_id_to_name(cursor, movie.imdb_id)
+                print "Movie Node " + str(movie.node) + " (" + str(movie.imdb_id) + "): " + imdb_lib.movie_id_to_name(cursor, movie.imdb_id)
         for actor in self.actors:
             if actor.imdb_id:
-                print "Actor Node " + str(actor.node) + ": " + imdb_lib.actor_id_to_name(cursor, actor.imdb_id)
+                print "Actor Node " + str(actor.node) + " (" + str(actor.imdb_id) + "): " + imdb_lib.actor_id_to_name(cursor, actor.imdb_id)
     def find_possible_movies(self, cursor, n):
         print "  Trying to find possible movies for slot " + str(n)
         possibilities_so_far = set(self.movies[n].possibilities)
@@ -151,21 +151,28 @@ class Board:
         for n in self.movies[n].links:
             print "   DEBUG: There are " + str(len(possibilities_so_far)) + " poss so far" 
             if self.actors[n].imdb_id != False:
-                possibilities_so_far = possibilities_so_far.intersection(imdb_lib.moviestheyhavebeenin(cursor, self.actors[n].imdb_id))
-                for n in imdb_lib.moviestheyhavebeenin(cursor, self.actors[n].imdb_id):
+                possibilities_so_far = possibilities_so_far.intersection(imdb_lib.movies_actor_has_been_in(cursor, self.actors[n].imdb_id))
+                for n in imdb_lib.movies_actor_has_been_in(cursor, self.actors[n].imdb_id):
                     print "    DBUG: movies they have been in: " + imdb_lib.movie_id_to_name(cursor, n)
                 for n in possibilities_so_far:
                     print "    DBUG: possibility: " + imdb_lib.movie_id_to_name(cursor, n)
         return possibilities_so_far
     def find_possible_actors(self, cursor, n):
         print "  Trying to find possible actors for slot " + str(n)
-        possibilities_so_far = set(self.actors[n].possibilities)
-        for n in self.actors[n].links:
-            print "   DEBUG: There are " + str(len(possibilities_so_far)) + " poss so far" 
-            if self.movies[n].imdb_id != False:
-                possibilities_so_far = possibilities_so_far.intersection(imdb_lib.actors_in(cursor, self.movies[n].imdb_id))
-                for n in possibilities_so_far:
-                    print "    DBUG: possibility: " + imdb_lib.actor_id_to_name(cursor, n)
+        if self.actors[n].hint == False:
+            # Special Case:
+            # If we don't have a hint, we must behave differently to get a list of possible actors
+            for n in self.actors[n].links:
+                if self.movies[n].imdb_id != False:
+                    possibilities_so_far = imdb_lib.actors_in(cursor, self.movies[n].imdb_id)
+        else:
+            possibilities_so_far = set(self.actors[n].possibilities)
+            for n in self.actors[n].links:
+                print "   DEBUG: There are " + str(len(possibilities_so_far)) + " poss so far" 
+                if self.movies[n].imdb_id != False:
+                    possibilities_so_far = possibilities_so_far.intersection(imdb_lib.actors_in(cursor, self.movies[n].imdb_id))
+                    for n in possibilities_so_far:
+                        print "    DBUG: possibility: " + imdb_lib.actor_id_to_name(cursor, n)
         return possibilities_so_far
 
 def filter_results(cursor, actors):
