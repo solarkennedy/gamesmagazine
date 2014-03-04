@@ -52,6 +52,8 @@ def solve_early_game(cursor, board):
             return False
     print "OMG!!!!!!!!!"
     print "Found a solution. Press enter when you have copied this solution"
+    pickle.dump( board, open('solution_board.p', 'wb') )
+    print "solution_board.p is dumped. Use graph_it.py to graph this soultion"
     raw_input()
     return True
 
