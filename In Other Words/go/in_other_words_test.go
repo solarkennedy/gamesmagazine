@@ -17,7 +17,7 @@ func TestRead_hints_file(t *testing.T) {
 func TestSearch_for_word(t *testing.T) {
 	hint := []string{"ANT", "CHAT", "ERA", "MEAT", "RAN"}
 	words := []string{"bogus", "test_string", "merchant", "merchants"}
-	actual := Search_for_word(hint, words)
+	_, actual := Search_for_word(hint, words)
 	expected := []string{"merchant", "merchants"}
 	if !reflect.DeepEqual(actual, expected) {
 		t.Log(actual)

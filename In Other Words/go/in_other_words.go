@@ -41,18 +41,17 @@ func Read_hints_file() [][]string {
 
 func Search_for_word(hint_words []string, words []string) ([]string, []string) {
 	if len(hint_words) == 0 {
-		fmt.Println("DEBUG: Out of hints")
-		return []string{}, []string{}
+		return hint_words, words
 	} else if len(hint_words) == 0 {
-		fmt.Println("DEBUG: Out of hints")
-		return []string{}, []string{}
+		return hint_words, words
 	} else {
 		word := hint_words[0]
-		fmt.Println("Searching all words for " + word)
 		matching_words := []string{}
-		word_regex := word
+		hint_array := strings.Split(word, "")
+		regex_string := strings.ToLower(".*" + strings.Join(hint_array, ".*") + ".*")
+		word_regex, _ := regexp.Compile(regex_string)
 		for _, dict_word := range words {
-			match, _ := regexp.MatchString(word_regex, dict_word)
+			match := word_regex.MatchString(dict_word)
 			if match {
 				matching_words = append(matching_words, dict_word)
 			}
