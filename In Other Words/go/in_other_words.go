@@ -9,12 +9,19 @@ import "regexp"
 func main() {
 	hints := Read_hints_file()
 	words := Import_wordlist()
+	N := len(hints)
+	sem := make(chan []string, N);  // semaphore pattern
 	for _, hint := range hints {
-		fmt.Print("Trying to find words that match: ")
-		fmt.Println(hint)
-		_, answers := Search_for_word(hint, words)
-		fmt.Println("Answers: ")
-		fmt.Println(answers)
+		go func (the_hint []string) {
+			fmt.Print("Trying to find words that match: ")
+			fmt.Println(hint)
+			_, answers := Search_for_word(hint, words)
+			sem <- answers;
+		} (hint);
+	}
+	// Wait for all goroutines
+	for i := 0; i < N; i++ {
+		<-sem
 	}
 }
 
