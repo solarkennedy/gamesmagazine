@@ -5,13 +5,16 @@ import "bufio"
 import "os"
 import "strings"
 import "regexp"
+import "runtime"
 
 func main() {
+	runtime.GOMAXPROCS(runtime.NumCPU())
 	hints := Read_hints_file()
 	words := Import_wordlist()
 	N := len(hints)
 	sem := make(chan []string, N);  // semaphore pattern
 	for _, hint := range hints {
+		hint := hint
 		go func (the_hint []string) {
 			fmt.Print("Trying to find words that match: ")
 			fmt.Println(hint)
@@ -21,7 +24,7 @@ func main() {
 	}
 	// Wait for all goroutines
 	for i := 0; i < N; i++ {
-		<-sem
+		<- sem
 	}
 }
 
