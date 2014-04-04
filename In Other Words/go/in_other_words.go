@@ -10,21 +10,20 @@ import "runtime"
 func main() {
 	runtime.GOMAXPROCS(runtime.NumCPU())
 	hints := Read_hints_file()
-	words := Import_wordlist()
 	N := len(hints)
-	sem := make(chan []string, N);  // semaphore pattern
+	sem := make(chan string);
 	for _, hint := range hints {
 		hint := hint
 		go func (the_hint []string) {
-			fmt.Print("Trying to find words that match: ")
-			fmt.Println(hint)
-			_, answers := Search_for_word(hint, words)
+			answers := Start_search(hint)
 			sem <- answers;
 		} (hint);
 	}
 	// Wait for all goroutines
+	report := ""
 	for i := 0; i < N; i++ {
 		<- sem
+		fmt.Println(report)
 	}
 }
 
@@ -47,6 +46,16 @@ func Read_hints_file() [][]string {
 		hints = append(hints, hint)
 	}
 	return hints
+}
+
+func Start_search(hint_words []string) (string) {
+	words := Import_wordlist()
+	fmt.Print("Trying to find words that match: ")
+	fmt.Println(hint_words)
+	_, answers := Search_for_word(hint_words, words)
+	fmt.Println("Answers: ")
+	fmt.Println(answers)
+	return "answeR"
 }
 
 func Search_for_word(hint_words []string, words []string) ([]string, []string) {
