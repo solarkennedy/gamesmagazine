@@ -37,7 +37,6 @@ func TestJoin_strings(t *testing.T) {
 	}
 }
 
-
 func BenchmarkImport_wordlist(b *testing.B) {
 	for n := 0; n < b.N; n++ {
 		Import_wordlist()

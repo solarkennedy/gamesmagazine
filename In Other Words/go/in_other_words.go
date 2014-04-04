@@ -12,17 +12,17 @@ func main() {
 	hints := Read_hints_file()
 	N := len(hints)
 	wordlist := Import_wordlist()
-	sem := make(chan string);
+	sem := make(chan string)
 	for _, hint := range hints {
 		hint := hint
-		go func (the_hint []string) {
+		go func(the_hint []string) {
 			answers := Start_search(hint, &wordlist)
-			sem <- answers;
-		} (hint);
+			sem <- answers
+		}(hint)
 	}
 	// Wait for all goroutines, and print their answer
 	for i := 0; i < N; i++ {
-		fmt.Printf("%v\n",<-sem)
+		fmt.Printf("%v\n", <-sem)
 	}
 }
 
@@ -47,7 +47,7 @@ func Read_hints_file() [][]string {
 	return hints
 }
 
-func Start_search(hint_words []string, wordlist *[]string) (string) {
+func Start_search(hint_words []string, wordlist *[]string) string {
 	_, answers := Search_for_word(hint_words, *wordlist)
 	return Join_strings(hint_words) + " => " + Join_strings(answers)
 }
@@ -73,6 +73,6 @@ func Search_for_word(hint_words []string, words []string) ([]string, []string) {
 	}
 }
 
-func Join_strings(string_array []string) (string) {
+func Join_strings(string_array []string) string {
 	return strings.Join(string_array, ", ")
 }
