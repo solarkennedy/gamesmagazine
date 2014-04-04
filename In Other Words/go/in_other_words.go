@@ -19,11 +19,9 @@ func main() {
 			sem <- answers;
 		} (hint);
 	}
-	// Wait for all goroutines
-	report := ""
+	// Wait for all goroutines, and print their answer
 	for i := 0; i < N; i++ {
-		<- sem
-		fmt.Println(report)
+		fmt.Printf("%v\n",<-sem)
 	}
 }
 
@@ -50,12 +48,8 @@ func Read_hints_file() [][]string {
 
 func Start_search(hint_words []string) (string) {
 	words := Import_wordlist()
-	fmt.Print("Trying to find words that match: ")
-	fmt.Println(hint_words)
 	_, answers := Search_for_word(hint_words, words)
-	fmt.Println("Answers: ")
-	fmt.Println(answers)
-	return "answeR"
+	return Join_strings(hint_words) + " => " + Join_strings(answers)
 }
 
 func Search_for_word(hint_words []string, words []string) ([]string, []string) {
@@ -77,4 +71,8 @@ func Search_for_word(hint_words []string, words []string) ([]string, []string) {
 		}
 		return Search_for_word(hint_words[1:], matching_words)
 	}
+}
+
+func Join_strings(string_array []string) (string) {
+	return strings.Join(string_array, ", ")
 }

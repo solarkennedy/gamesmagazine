@@ -26,6 +26,18 @@ func TestSearch_for_word(t *testing.T) {
 	}
 }
 
+func TestJoin_strings(t *testing.T) {
+	words := []string{"bogus", "test_string", "merchant", "merchants"}
+	expected := "bogus, test_string, merchant, merchants"
+	actual := Join_strings(words)
+	if expected != actual {
+		t.Log(actual)
+		t.Log(expected)
+		t.Error("Actual and expected differ ^")
+	}
+}
+
+
 func BenchmarkImport_wordlist(b *testing.B) {
 	for n := 0; n < b.N; n++ {
 		Import_wordlist()
