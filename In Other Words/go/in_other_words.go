@@ -11,11 +11,12 @@ func main() {
 	runtime.GOMAXPROCS(runtime.NumCPU())
 	hints := Read_hints_file()
 	N := len(hints)
+	wordlist := Import_wordlist()
 	sem := make(chan string);
 	for _, hint := range hints {
 		hint := hint
 		go func (the_hint []string) {
-			answers := Start_search(hint)
+			answers := Start_search(hint, &wordlist)
 			sem <- answers;
 		} (hint);
 	}
@@ -46,9 +47,8 @@ func Read_hints_file() [][]string {
 	return hints
 }
 
-func Start_search(hint_words []string) (string) {
-	words := Import_wordlist()
-	_, answers := Search_for_word(hint_words, words)
+func Start_search(hint_words []string, wordlist *[]string) (string) {
+	_, answers := Search_for_word(hint_words, *wordlist)
 	return Join_strings(hint_words) + " => " + Join_strings(answers)
 }
 
